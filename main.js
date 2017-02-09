@@ -11,6 +11,10 @@ var route_path = [];
 
 $(document).ready(function() {
     event_handlers();
+    $('.bar-main-container').on('click', '.btn-success', function(){
+        console.log("Add To List button works");
+        $(this).parent().parent().clone().appendTo('.modal-body');
+    })
 
 });
 
@@ -161,7 +165,7 @@ function bars_to_dom(addBarObj) {
     // TODO this is being called twice for some reason
     console.log('bars to dom init');
 
-    var bar_container = $('<div>').addClass('media');
+    var bar_container = $('<div>').addClass('barListItem media');
     var bar_image_container = $('<div>').addClass('media-left media-middle');
     var bar_image = $('<img>').addClass('media-object');
 
@@ -177,16 +181,21 @@ function bars_to_dom(addBarObj) {
     var price = $('<h5>').text('Price Level: ' + addBarObj.price_level);//TODO need span with in hv?
     var reviews = $('<h5>').text('Reviews: ' + addBarObj.rating);//TODO need span with in hv?
 
-    var add_button = $('<button>').text('Add').addClass('btn btn-success navbar-btn');
+    var add_button = $('<button>', {
+        text: 'Add To List',
+        class: 'btn btn-success navbar-btn',
+        onclick: ''
+    });
 
     bar_info_list.append(address, hours, price, reviews);
     bar_info_container.append(bar_name, bar_info_list, add_button);
     bar_image_container.append(bar_image);
 
     bar_container.append(bar_image_container, bar_info_container);
+    bar_container.appendTo('.bar-main-container');
 
-    $('.bar-main-container').append(bar_container);
 }
+
 
 
 /**
@@ -215,7 +224,7 @@ function update_bars() {
     console.log('update_bars has been loaded. ');
     $('.bar-main-container').html('');
     for (var i =0; i < bar_array.length; i++){
-        bars_to_dom(bar_array[i])
+        bars_to_dom(bar_array[i]);
     }
 }
 
@@ -227,13 +236,6 @@ function remove_a_bar() {
     console.log('remoce_a_bar has been loaded')
 }
 
-
-/**
- *  function will add any bars that have been added to the users to-do list once the (BLUE) button is clicked.
- */
-function add_bar_to_list() {
-
-}
 
 
 
