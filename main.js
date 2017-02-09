@@ -1,7 +1,7 @@
 var map; // map object
 var info_window; // info displayed when marker is clicked
 var bar_array = []; // results are stored from search
-var input = $('#location_input'); //
+//var input = $('#location_input'); //
 var radius = 8047; // initial radius
 var zoom  = 4; // initial zoom
 var latitude = 39; // initial latitude displayed when page loads
@@ -10,6 +10,8 @@ var current_place = {}; // used to store the place object you clicked on when vi
 var route_path = []; // stores lat/lng for each location that we have added to our list
 var geocoder = new google.maps.Geocoder(); //  creates geocoder object, used to convert locations to lat/lng
 var coordinates; // stores location information for address that was input into search bar
+var bars_listed = [];
+var bars_added = [];
 
 
 google.maps.event.addDomListener(window, 'load', initMap); //loads map after window has been loaded
@@ -61,22 +63,17 @@ function get_coordinates() {
     });
 }
 
-// adds bar to bars_added array when "add" is clicked on info_window. also plots route on the map when there is more than one location chosen.
+// adds bar to bars_added array when "add" is clicked on info_window.
 function add_bar_to_array() {
     // if statement blocks ability to add same bar twice in a row
     if (current_place == bars_added[bars_added.length - 1]) {
         return;
     }
     bars_added.push(current_place);
-    var current_lat = current_place.location.coordinate.latitude;
-    var current_lng = current_place.location.coordinate.longitude;
-    var current_place_coordinates = new google.maps.LatLng(current_lat, current_lng);
-    route_path.push(current_place_coordinates);
+
     //  if statement used to plot route between last two items in route_path array
-    if (route_path.length > 1) {
-        for (var i = route_path.length-1; i < route_path.length; i++) {
-            create_route(route_path[i-1], route_path[i])
-        }
+    if (bars_added.length > 1) {
+        create_route(bars_added)
     }
 }
 
@@ -85,7 +82,8 @@ function initMap() {
     var center = {lat: latitude, lng: longitude};
     map = new google.maps.Map(document.getElementById('map_canvas'), {
         center: center,
-        zoom: zoom
+        zoom: zoom,
+        radius: radius
     });
 
     info_window = new google.maps.InfoWindow(); // info_window displays popup company info when clicking on marker. specific info is defined below
@@ -105,25 +103,37 @@ function bar_info_window(place) {
 
 // TODO add multiple travel modes = walking, driving, etc
 // function used to create route and render it on the map
-function create_route(origin, destination) {
+function create_route(bars_added) {
     console.log('create route called');
     var directions_service = new google.maps.DirectionsService();
     var directions_renderer = new google.maps.DirectionsRenderer({
         preserveViewport : true, // disables zoom in when creating route
         map: map,
         suppressMarkers: true // removes markers that are created on top of current markers when plotting route.
-
     });
-    var request = {
-        origin: origin,
-        destination: destination,
-        travelMode: 'DRIVING'
-    };
-    directions_service.route(request, function(response, status) {
-        if (status == 'OK') {
-            directions_renderer.setDirections(response);
-        }
-    })
+
+    for (var i = 0; i < bars_added.length-1; i++) {
+
+        var start_lat = bars_added[i].location.coordinate.latitude;
+        var start_lng = bars_added[i].location.coordinate.longitude;
+        var start_coordinates = new google.maps.LatLng(start_lat, start_lng);
+
+        var end_lat = bars_added[i+1].location.coordinate.latitude;
+        var end_lng = bars_added[i+1].location.coordinate.longitude;
+        var end_coordinates = new google.maps.LatLng(end_lat, end_lng);
+
+        var request = {
+            origin: start_coordinates,
+            destination: end_coordinates,
+            travelMode: 'DRIVING'
+        };
+
+        directions_service.route(request, function (response, status) {
+            if (status == 'OK') {
+                directions_renderer.setDirections(response);
+            }
+        })
+    }
 }
 
 
@@ -207,20 +217,8 @@ function process_businesses(results) {
 
 
 
-
-// Variables
-var bars_listed = [];
-var bars_added = [];
-var geocoder = new google.maps.Geocoder();
-var coordinates;
-
-
 //create DOM elements for page 2
 function bars_to_dom(addBarObj) {
-
-
-    // TODO this is being called twice for some reason
-    console.log('bars to dom init');
 
     var bar_container = $('<div>').addClass('barListItem media');
     var bar_image_container = $('<div>').addClass('media-left media-middle');
@@ -254,8 +252,6 @@ function bars_to_dom(addBarObj) {
     bar_container.appendTo('.bar-main-container');
 
 }
-
-
 
 /**
  * function will loop through a list and will show up on the (left or right) of the screen with all nearby bars.
@@ -319,6 +315,13 @@ var printList = $("#barList").printElement();
 
 $('#lnkPrint').append(printList);
 
+
+
+
+//TODO update radius level to work with radio buttons
+//TODO add enter key to submitting location
+//TODO remove info_window after clicking add
+//TODO remove sample data from check bar list
 
 
 
