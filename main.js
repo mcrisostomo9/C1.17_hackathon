@@ -1,5 +1,6 @@
 var map;
 var info_window;
+var bar_array = [];
 
 
 
@@ -23,8 +24,10 @@ function initMap() {
     service.nearbySearch(request, callback);
 
     function callback(results, status) {
+        bar_array = results;
         if (status == google.maps.places.PlacesServiceStatus.OK) {
             for (var i=0; i < results.length; i++) {
+
                 createMarker(results[i]);
             }
         }
