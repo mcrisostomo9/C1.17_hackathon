@@ -1,19 +1,23 @@
 var map;
 var info_window;
 var bar_array = [];
-
+var input = $('#location_input');
+var radius = 8047;
+var zoom  = 4;
+var latitude = 39;
+var longitude = -97;
 
 
 function initMap() {
-    var center = {lat: 33.877742, lng: -117.380979};
+    var center = {lat: latitude, lng: longitude};
     map = new google.maps.Map(document.getElementById('map_canvas'), {
         center: center,
-        zoom: 11
+        zoom: zoom
     });
 
     var request = {
         location: center,
-        radius: 16047,
+        radius: radius,
         types: ['bar']
     };
 
@@ -27,7 +31,6 @@ function initMap() {
         bar_array = results;
         if (status == google.maps.places.PlacesServiceStatus.OK) {
             for (var i=0; i < results.length; i++) {
-
                 createMarker(results[i]);
             }
         }
@@ -45,8 +48,8 @@ function initMap() {
             info_window.open(map, this);
         })
     }
-
 }
+
 
 google.maps.event.addDomListener(window, 'load', initMap);
 
