@@ -10,28 +10,29 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyArDHYzfG98PdoCP0hP5Xs_5a4lBwDOA0M&libraries=places"></script>
     <script src="main.js"></script>
     <script src="index.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Fontdiner+Swanky" rel="stylesheet">
     <title>Beer Run</title>
 </head>
 <body>
 <div class="container">
     <!-- Will be reusing header created from Mark's Page 1 -->
     <div class="page-header">
-        <h1 class="hidden-xs text-center">Beer Run</h1>
-        <h3 class="visible-xs text-center">Beer Run</h3>
+        <h1 class="hidden-xs text-center no_print">Beer Run</h1>
+        <h3 class="visible-xs text-center no_print">Beer Run</h3>
     </div>
     <div>
-        <input type="text" class="search_bar" placeholder="Enter Zip Code/City">
-        <button class="search_button btn btn-primary" onclick="get_coordinates()">Get Barzzz</button>
+        <input type="text" class="search_bar no_print" placeholder="Enter Zip Code/City">
+        <button class="search_button btn btn-primary no_print" onclick="get_coordinates()">Get Barzzz</button>
     </div>
     <!-- Div used for Google Maps AJAX Call -->
-    <div id="map_canvas" class="col-md-7">
+    <div id="map_canvas no_print" class="col-md-7">
 
 
     </div>
     <br>
     <br>
     <br>
-    <button type="button" class="btn btn-default btn-lg center-block" data-toggle="modal" data-target="#barList">Check Bar List</button>
+    <button type="button" class="btn btn-default btn-lg center-block no_print" data-toggle="modal" data-target="#barList">Check Bar List</button>
 
     <!-- Div used for Beer Run Logo-->
     <div class="col-md-5 pull-right bar-main-container">
@@ -66,6 +67,7 @@
                         </a>
                     </div>
                     <div class="media-body">
+
                         <h4 class="media-heading">Bar Name</h4>
                         <div class="col-md-9">
                             <h5>Address: <span class="">1234 Irvine Center Dr., Irvine, CA, 91234</span></h5>
@@ -122,20 +124,18 @@
                             <h5>Reviews: <span class="">40 reviews</span></h5>
                         </div>
                     </div>
+                    <a href="#" id="lnkPrint" class="no_print">Print</a>
                 </div>
-                <div class="fb-share-button" data-href="http://localhost:63342/lfz/C1.17_hackathon/index.html?_ijt=4pg865n390rucj0dhcltn0482r" data-layout="button" data-size="large" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A63342%2Flfz%2FC1.17_hackathon%2Findex.html%3F_ijt%3D4pg865n390rucj0dhcltn0482r&amp;src=sdkpreparse">Share</a></div>
             </div>
             <!-- End of sample entries -->
-
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal">Calculate</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success no_print" data-dismiss="modal">Calculate</button>
+                <button type="button" class="btn btn-default no_print" data-dismiss="modal">Close</button>
             </div>
         </div>
 
     </div>
 </div>
-
-
 </body>
 </html>
+

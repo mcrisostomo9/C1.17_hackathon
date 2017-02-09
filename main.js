@@ -11,6 +11,10 @@ var route_path = [];
 
 $(document).ready(function() {
     event_handlers();
+    $('#lnkPrint').click(function()
+    {
+        window.print();
+    });
 });
 
 
@@ -137,6 +141,9 @@ window.fbAsyncInit = function() {
 
 /////////////////////////////////////////////////
 
+var printList = $("#barList").printElement();
+
+$('#lnkPrint').append(printList);
 
 
 
