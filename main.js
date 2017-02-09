@@ -21,7 +21,13 @@ $(document).ready(function() {
     $('.bar-main-container').on('click', '.btn-success', function(){
         console.log("Add To List button works");
         $(this).parent().parent().clone().appendTo('.modal-body');
-    })
+    });
+
+
+    $('#lnkPrint').click(function()
+    {
+        window.print();
+    });
 
 });
 
@@ -48,7 +54,7 @@ function get_coordinates() {
             pull_data_from_yelp($('.search_bar').val());
             setTimeout(function() {
                 process_businesses(bar_array);
-                bars_to_dom();
+                update_bars()
             }, 1500)
         }
         else {
@@ -222,19 +228,21 @@ function bars_to_dom(addBarObj) {
 
     var bar_container = $('<div>').addClass('barListItem media');
     var bar_image_container = $('<div>').addClass('media-left media-middle');
-    var bar_image = $('<img>').addClass('media-object');
+    var bar_image = $('<img>').attr('src', addBarObj.image_url).addClass('media-object');
 
     var bar_info_container = $('<div>').addClass('media-body');
     var bar_name = $('<h4>').text(addBarObj.name).addClass('media-heading');
 
     var bar_info_list = $('<div>').addClass('col-md-8 pull-left');
-    var address = $('<h5>').text('Address: ' + addBarObj.vicinity);//TODO need span with in hv?
-    var hours = $('<h5>').text('Hours: ');//TODO need span with in hv?
+    var address = $('<h5>').text('Address: ' + addBarObj.location.display_address[0] + ', ' + addBarObj.location
+            .display_address[1]);//TODO need span with in hv?
+    // var hours = $('<h5>').text('Hours: ' +);//TODO need span with in hv?
     if (addBarObj.price_level === undefined){
 
     }
+    var phone = $('<h5>').text('Phone: ' + addBarObj.phone);
     var price = $('<h5>').text('Price Level: ' + addBarObj.price_level);//TODO need span with in hv?
-    var reviews = $('<h5>').text('Reviews: ' + addBarObj.rating);//TODO need span with in hv?
+    var rating = $('<h5>').text('Rating: ' + addBarObj.rating + ' Reviews: ' + addBarObj.review_count);//TODO need span with in hv?
 
     var add_button = $('<button>', {
         text: 'Add To List',
@@ -242,7 +250,7 @@ function bars_to_dom(addBarObj) {
         onclick: ''
     });
 
-    bar_info_list.append(address, hours, price, reviews);
+    bar_info_list.append(address, phone, price, rating);
     bar_info_container.append(bar_name, bar_info_list, add_button);
     bar_image_container.append(bar_image);
 
@@ -276,8 +284,8 @@ function show_bar_list() {
 function update_bars() {
     console.log('update_bars has been loaded. ');
     $('.bar-main-container').html('');
-    for (var i =0; i < bar_array.length; i++){
-        bars_to_dom(bar_array[i]);
+    for (var i =0; i < bar_array.businesses.length; i++){
+        bars_to_dom(bar_array.businesses[i]);
     }
 }
 
@@ -289,6 +297,29 @@ function remove_a_bar() {
     console.log('remoce_a_bar has been loaded')
 }
 
+//////////////////////////////////////This code is for the FB share button.
+window.fbAsyncInit = function() {
+    FB.init({
+        appId      : 'your-app-id',
+        xfbml      : true,
+        version    : 'v2.8'
+    });
+    FB.AppEvents.logPageView();
+};
+
+(function(d, s, id){
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) {return;}
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+
+/////////////////////////////////////////////////
+
+var printList = $("#barList").printElement();
+
+$('#lnkPrint').append(printList);
 
 
 

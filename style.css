@@ -6,6 +6,10 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
+    /*background-image: url("assets/minimal-guinness-beer.jpg");*/
+    background-image: url("assets/bigstock-Coffee-Shop-Blur-Background-Wi-86599157.jpg");
+    background-size: 122%;
+    background-repeat: no-repeat;
 }
 
 .container {
@@ -18,4 +22,29 @@ html, body {
 .bar-main-container {
     height: 50vh;
     overflow: auto;
+}
+h1{
+    color: white;
+    font-family: 'Fontdiner Swanky', cursive;
+}
+h1{
+    color: white;
+}
+
+.modal-body{
+    background-image: url('https://s-media-cache-ak0.pinimg.com/736x/0a/9e/92/0a9e923adee15a3c35eb35a083155bf7.jpg');
+    color: white;
+}
+
+@media print {
+    .no_print{
+        display: none;
+    }
+    body{
+        size: 40px;
+    }
+    #map_canvas{
+        display: none;
+    }
+
 }

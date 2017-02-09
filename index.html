@@ -11,18 +11,19 @@
     <script type="text/javascript" src="OAuth.js"></script>
     <script type="text/javascript" src="SHA1.js"></script>
     <script src="main.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Fontdiner+Swanky" rel="stylesheet">
     <title>Beer Run</title>
 </head>
 <body>
 <div class="container">
     <!-- Will be reusing header created from Mark's Page 1 -->
     <div class="page-header">
-        <h1 class="hidden-xs text-center">Beer Run</h1>
-        <h3 class="visible-xs text-center">Beer Run</h3>
+        <h1 class="hidden-xs text-center no_print">Beer Run</h1>
+        <h3 class="visible-xs text-center no_print">Beer Run</h3>
         <div class="text-center">
             <input type="text" class="search_bar" placeholder="Enter Zip Code/City">
             <button class="search_button btn btn-primary">Get Barzzz</button>
-            <button type="button" class="btn btn-default btn-lg center-block" data-toggle="modal" data-target="#barList">Check Bar List</button>
+            <button type="button" class="btn btn-default btn-lg center-block no_print" data-toggle="modal" data-target="#barList">Check Bar List</button>
         </div>
     </div>
     <!-- Div used for Google Maps AJAX Call -->
@@ -35,11 +36,7 @@
             <label class="radio-inline"><input type="radio" name="optradio">10 Miles</label>
             <label class="radio-inline"><input type="radio" name="optradio">20 Miles</label>
         </div>
-
     </div>
-
-
-
 
     <!-- Div used for Beer Run Logo-->
     <div class="col-md-5 pull-right bar-main-container">
@@ -81,20 +78,18 @@
                             <h5>Reviews: <span class="">40 reviews</span></h5>
                         </div>
                     </div>
+                    <a href="#" id="lnkPrint" class="no_print">Print</a>
                 </div>
-
             </div>
             <!-- End of sample entries -->
-
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal">Calculate</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success no_print" data-dismiss="modal">Calculate</button>
+                <button type="button" class="btn btn-default no_print" data-dismiss="modal">Close</button>
             </div>
         </div>
 
     </div>
 </div>
-
-
 </body>
 </html>
+
