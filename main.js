@@ -63,17 +63,13 @@ function get_coordinates() {
     });
 }
 
-// adds bar to bars_added array when "add" is clicked on info_window. also plots route on the map when there is more than one location chosen.
+// adds bar to bars_added array when "add" is clicked on info_window.
 function add_bar_to_array() {
     // if statement blocks ability to add same bar twice in a row
     if (current_place == bars_added[bars_added.length - 1]) {
         return;
     }
     bars_added.push(current_place);
-    // var current_lat = current_place.location.coordinate.latitude;
-    // var current_lng = current_place.location.coordinate.longitude;
-    // var current_place_coordinates = new google.maps.LatLng(current_lat, current_lng);
-    // route_path.push(current_place_coordinates);
 
     //  if statement used to plot route between last two items in route_path array
     if (bars_added.length > 1) {
@@ -224,8 +220,6 @@ function process_businesses(results) {
 //create DOM elements for page 2
 function bars_to_dom(addBarObj) {
 
-    console.log('bars to dom init');
-
     var bar_container = $('<div>').addClass('barListItem media');
     var bar_image_container = $('<div>').addClass('media-left media-middle');
     var bar_image = $('<img>').attr('src', addBarObj.image_url).addClass('media-object');
@@ -326,5 +320,8 @@ $('#lnkPrint').append(printList);
 
 //TODO update radius level to work with radio buttons
 //TODO add enter key to submitting location
+//TODO remove info_window after clicking add
+//TODO remove sample data from check bar list
+
 
 
