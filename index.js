@@ -5,11 +5,11 @@
 /**
  * document load
  */
-//TODO  click handlers
 $(document).ready(initialize);
 
 function initialize(){
     $('.search_button').click(bar_search);
+
 }
 
 // Variables
@@ -24,13 +24,13 @@ var bars_added = [];
 
 function bar_search() {
     console.log('search has been clicked');
-    //TODO go to page 2
     //TODO ajax call to fill bars_listed
+    bars_to_dom();
     
 }
 //create DOM elements for page 2
 function bars_to_dom() {
-    var main_container = $('<div>').addClass('col-md5 pull-right');
+    console.log('second page');
     var bar_container = $('<div>').addClass('media');
 
     var bar_image_container = $('<div>').addClass('media-left media-middle');
@@ -38,11 +38,22 @@ function bars_to_dom() {
 
     var bar_info_container = $('<div>').addClass('media-body');
     var bar_name = $('<h4>').addClass('media-heading');
+
     var bar_info_list = $('<div>').addClass('col-md-8 pull-left');
     var address = $('<h5>').text('Address: ');//TODO need span with in hv?
     var hours = $('<h5>').text('Hours: ');//TODO need span with in hv?
     var phone = $('<h5>').text('Phone: ');//TODO need span with in hv?
     var reviews = $('<h5>').text('Reviews: ');//TODO need span with in hv?
+
+    var add_button = $('<button>').addClass('btn btn-success navbar-btn');
+
+    bar_info_list.append(address, hours, phone, reviews);
+    bar_info_container.append(bar_name, bar_info_list, add_button);
+    bar_image_container.append(bar_image);
+
+    bar_container.append(bar_image_container, bar_info_container);
+
+    $('.bar-main-container').append(bar_container);
 
 }
 
