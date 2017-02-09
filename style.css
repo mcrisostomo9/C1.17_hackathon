@@ -11,3 +11,11 @@ html, body {
 .container {
     height: 100%;
 }
+
+#map_container {
+    height: 100%;
+}
+.bar-main-container {
+    height: 50vh;
+    overflow: auto;
+}
