@@ -14,10 +14,7 @@ function initialize(){
 
 // Variables
 var bars_listed = [];
-var bars_added = [];
-var geocoder = new google.maps.Geocoder();
-var coordinates;
-
+var bars_added = []; // array of bars that we clicked "add" on
 
 /**
  * We need a search function that when licked, the search function will load all necessary functions for Page 2
@@ -28,27 +25,6 @@ function bar_search() {
     //TODO ajax call to fill bars_listed
     bars_to_dom();
     
-}
-
-function get_coordinates() {
-    var input_address = $('.search_bar').val();
-    var address = {
-        address: input_address
-    };
-
-    geocoder.geocode(address, function(result, status){
-        if (status === 'OK') {
-            coordinates = result[0].geometry.location;
-            latitude = coordinates.lat();
-            longitude = coordinates.lng();
-            zoom = 13;
-            initMap();
-            bars_to_dom();
-        }
-        else {
-            console.log('geocoding not working')
-        }
-    });
 }
 
 //create DOM elements for page 2
@@ -81,7 +57,6 @@ function bars_to_dom() {
     bar_container.append(bar_image_container, bar_info_container);
 
     $('.bar-main-container').append(bar_container);
-
 }
 
 
