@@ -11,8 +11,6 @@
     <script type="text/javascript" src="OAuth.js"></script>
     <script type="text/javascript" src="SHA1.js"></script>
     <script src="main.js"></script>
-    <script src="index.js"></script>
-
     <title>Beer Run</title>
 </head>
 <body>
@@ -21,27 +19,33 @@
     <div class="page-header">
         <h1 class="hidden-xs text-center">Beer Run</h1>
         <h3 class="visible-xs text-center">Beer Run</h3>
-    </div>
-    <div>
-        <input type="text" class="search_bar" placeholder="Enter Zip Code/City">
-        <button class="search_button btn btn-primary" onclick="get_coordinates()">Get Barzzz</button>
+        <div class="text-center">
+            <input type="text" class="search_bar" placeholder="Enter Zip Code/City">
+            <button class="search_button btn btn-primary">Get Barzzz</button>
+            <button type="button" class="btn btn-default btn-lg center-block" data-toggle="modal" data-target="#barList">Check Bar List</button>
+        </div>
     </div>
     <!-- Div used for Google Maps AJAX Call -->
-    <div id="map_canvas" class="col-md-7">
+    <div id="map_container" class="col-md-7">
+        <div id="map_canvas">
 
+        </div>
+        <div class="btn-group pull-right">
+            <label class="radio-inline"><input type="radio" name="optradio">5 Miles</label>
+            <label class="radio-inline"><input type="radio" name="optradio">10 Miles</label>
+            <label class="radio-inline"><input type="radio" name="optradio">20 Miles</label>
+        </div>
 
     </div>
-    <br>
-    <br>
-    <br>
-    <button type="button" class="btn btn-default btn-lg center-block" data-toggle="modal" data-target="#barList">Check Bar List</button>
+
+
+
 
     <!-- Div used for Beer Run Logo-->
     <div class="col-md-5 pull-right bar-main-container">
         <!-- Div used for Logo/Calculate Route -->
         <div src="#"></div>
         <!-- Div used for List Items-->
-
     </div>
 </div>
 
@@ -78,54 +82,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="media">
-                    <div class="media-left media-middle">
-                        <a href="#">
-                            <img class=media-object" src="#" alt="">
-                        </a>
-                    </div>
-                    <div class="media-body">
-                        <h4 class="media-heading">Bar Name</h4>
-                        <div class="col-md-9">
-                            <h5>Address: <span class="">1234 Irvine Center Dr., Irvine, CA, 91234</span></h5>
-                            <h5>Hours: <span class="">10pm - 3am</span></h5>
-                            <h5>Phone: <span class="">323 213 6543</span></h5>
-                            <h5>Reviews: <span class="">40 reviews</span></h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="media">
-                    <div class="media-left media-middle">
-                        <a href="#">
-                            <img class=media-object" src="#" alt="">
-                        </a>
-                    </div>
-                    <div class="media-body">
-                        <h4 class="media-heading">Bar Name</h4>
-                        <div class="col-md-9">
-                            <h5>Address: <span class="">1234 Irvine Center Dr., Irvine, CA, 91234</span></h5>
-                            <h5>Hours: <span class="">10pm - 3am</span></h5>
-                            <h5>Phone: <span class="">323 213 6543</span></h5>
-                            <h5>Reviews: <span class="">40 reviews</span></h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="media">
-                    <div class="media-left media-middle">
-                        <a href="#">
-                            <img class=media-object" src="#" alt="">
-                        </a>
-                    </div>
-                    <div class="media-body">
-                        <h4 class="media-heading">Bar Name</h4>
-                        <div class="col-md-9">
-                            <h5>Address: <span class="">1234 Irvine Center Dr., Irvine, CA, 91234</span></h5>
-                            <h5>Hours: <span class="">10pm - 3am</span></h5>
-                            <h5>Phone: <span class="">323 213 6543</span></h5>
-                            <h5>Reviews: <span class="">40 reviews</span></h5>
-                        </div>
-                    </div>
-                </div>
+
             </div>
             <!-- End of sample entries -->
 
