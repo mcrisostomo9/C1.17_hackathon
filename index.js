@@ -41,7 +41,7 @@ function get_coordinates() {
             coordinates = result[0].geometry.location;
             latitude = coordinates.lat();
             longitude = coordinates.lng();
-            zoom = 11;
+            zoom = 13;
             initMap();
             bars_to_dom();
         }
