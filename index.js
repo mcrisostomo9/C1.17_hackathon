@@ -69,7 +69,6 @@ function bars_to_dom() {
     var bar_info_list = $('<div>').addClass('col-md-8 pull-left');
     var address = $('<h5>').text('Address: ');//TODO need span with in hv?
     var hours = $('<h5>').text('Hours: ');//TODO need span with in hv?
-    var phone = $('<h5>').text('Phone: ');//TODO need span with in hv?
     var reviews = $('<h5>').text('Reviews: ');//TODO need span with in hv?
 
     var add_button = $('<button>').addClass('btn btn-success navbar-btn');
@@ -91,11 +90,11 @@ function bars_to_dom() {
 
 function show_bar_list() {
     var bl = bars_listed[i];
-    var image  =  bl.image;
+    // var image  =  bl.image;
     var bar_name = bl.name;
     var hours = bl.hours;
     var address = bl.address;
-    var phone_number = bl.phone;
+    // var phone_number = bl.phone;
     var rating = bl.rating;
     var pricing = bl.pricing;
     for (i = 0; i < bars_listed.length; i++){
@@ -108,7 +107,11 @@ function show_bar_list() {
  * function will update bars that will be posted on page 2 when loaded, bar removed from list, or added to list.
  */
 function update_bars() {
-    console.log('update_bars has been loaded. ')
+    console.log('update_bars has been loaded.');
+    $('.bar-main-container').html('');
+    for (var i = 0; i < bars_listed.length; i++){
+            bars_to_dom(bar_array[i])
+    }
 }
 
 /**
@@ -116,7 +119,7 @@ function update_bars() {
  */
 
 function remove_a_bar() {
-    console.log('remoce_a_bar has been loaded')
+    console.log('remove_a_bar has been loaded')
 }
 
 
@@ -126,4 +129,6 @@ function remove_a_bar() {
 function add_bar_to_list() {
 
 }
+
+
 

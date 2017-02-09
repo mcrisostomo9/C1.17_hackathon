@@ -6,8 +6,26 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
+    /*background-image: url("assets/minimal-guinness-beer.jpg");*/
+    background-image: url("assets/bigstock-Coffee-Shop-Blur-Background-Wi-86599157.jpg");
+    background-size: 122%;
+    background-repeat: no-repeat;
 }
 
 .container {
     height: 100%;
+}
+body{
+    color: cadetblue;;
+}
+body{
+    /*color: white;*/
+
+}
+
+.modal-body{
+   /*background-image: url("https://s-media-cache-ak0.pinimg.com/736x/6b/28/13/6b2813c74fd2141ada35859cf3b1da0b.jpg");*/
+    /*background-image: url('http://favim.com/orig/201106/22/beautiful-black-white-city-germany-leipzig-life-Favim.com-79603.jpg');*/
+    background-image: url('https://s-media-cache-ak0.pinimg.com/736x/0a/9e/92/0a9e923adee15a3c35eb35a083155bf7.jpg');
+
 }
