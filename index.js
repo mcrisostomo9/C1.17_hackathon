@@ -5,7 +5,12 @@
 /**
  * document load
  */
+//TODO  click handlers
 
+
+// Variables
+var bars_listed = [];
+var bars_added = [];
 
 
 /**
@@ -13,8 +18,8 @@
  * to start
  */
 
-function first_search() {
-    console.log('first_search has been clicked.')
+function bar_search() {
+    console.log('search has been clicked');
 
 }
 
@@ -23,6 +28,17 @@ function first_search() {
  */
 
 function show_bar_list() {
+    var bl = bars_listed[i];
+    var image  =  bl.image;
+    var bar_name = bl.name;
+    var hours = bl.hours;
+    var address = bl.address;
+    var phone_number = bl.phone;
+    var rating = bl.rating;
+    var pricing = bl.pricing;
+    for (i = 0; i < bars_listed.length; i++){
+
+    }
 
 }
 
@@ -45,5 +61,7 @@ function remove_a_bar() {
 /**
  *  function will add any bars that have been added to the users to-do list once the (BLUE) button is clicked.
  */
+function add_bar_to_list() {
 
+}
 
