@@ -19,7 +19,13 @@ $(document).ready(function() {
     $('.bar-main-container').on('click', '.btn-success', function(){
         console.log("Add To List button works");
         $(this).parent().parent().clone().appendTo('.modal-body');
-    })
+    });
+
+
+    $('#lnkPrint').click(function()
+    {
+        window.print();
+    });
 
 });
 
@@ -289,6 +295,29 @@ function remove_a_bar() {
     console.log('remoce_a_bar has been loaded')
 }
 
+//////////////////////////////////////This code is for the FB share button.
+window.fbAsyncInit = function() {
+    FB.init({
+        appId      : 'your-app-id',
+        xfbml      : true,
+        version    : 'v2.8'
+    });
+    FB.AppEvents.logPageView();
+};
+
+(function(d, s, id){
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) {return;}
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+
+/////////////////////////////////////////////////
+
+var printList = $("#barList").printElement();
+
+$('#lnkPrint').append(printList);
 
 
 
