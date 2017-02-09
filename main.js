@@ -11,6 +11,7 @@ var route_path = []; // stores lat/lng for each location that we have added to o
 var geocoder = new google.maps.Geocoder(); //  creates geocoder object, used to convert locations to lat/lng
 var coordinates; // stores location information for address that was input into search bar
 
+
 google.maps.event.addDomListener(window, 'load', initMap); //loads map after window has been loaded
 
 $(document).ready(function() {
@@ -35,9 +36,12 @@ function get_coordinates() {
             coordinates = result[0].geometry.location;
             latitude = coordinates.lat();
             longitude = coordinates.lng();
-            zoom = 13;
-            initMap();
-            bars_to_dom();
+            zoom = 11;
+            pull_data_from_yelp($('.search_bar').val());
+            setTimeout(function() {
+                process_businesses(bar_array);
+                bars_to_dom();
+            }, 1500)
         }
         else {
             console.log('geocoding not working')
@@ -52,8 +56,8 @@ function add_bar_to_array() {
         return;
     }
     bars_added.push(current_place);
-    var current_lat = current_place.geometry.location.lat();
-    var current_lng = current_place.geometry.location.lng();
+    var current_lat = current_place.location.coordinate.latitude;
+    var current_lng = current_place.location.coordinate.longitude;
     var current_place_coordinates = new google.maps.LatLng(current_lat, current_lng);
     route_path.push(current_place_coordinates);
     //  if statement used to plot route between last two items in route_path array
@@ -72,42 +76,8 @@ function initMap() {
         zoom: zoom
     });
 
-    var request = {
-        location: center,
-        radius: radius,
-        types: ['bar'] //specifies what type of results we want displayed
-    };
-
     info_window = new google.maps.InfoWindow(); // info_window displays popup company info when clicking on marker. specific info is defined below
 
-    var service = new google.maps.places.PlacesService(map); // creates a Google Places object
-
-    service.nearbySearch(request, callback); // nearBy search method called on Google Places object with request. Results are sent to callback function below.
-
-    //results are stored into bar_array and plotted on map using createMarker function
-    function callback(results, status) {
-        bar_array = results;
-        if (status == google.maps.places.PlacesServiceStatus.OK) {
-            for (var i=0; i < results.length; i++) {
-                createMarker(results[i]);
-            }
-        }
-    }
-
-    function createMarker(place) {
-        debugger;
-        var placeLoc = place.geometry.location; // stores lat and lng for current bar
-        var marker = new google.maps.Marker({ // markers created and placed onto map using placeLoc
-            map: map,
-            position: placeLoc,
-            icon: 'http://maps.google.com/mapfiles/kml/pal2/icon19.png'
-        });
-
-        google.maps.event.addListener(marker, 'click', function() { // click handlers added to each marker to display info_window
-            info_window.setContent(bar_info_window(place));
-            info_window.open(map, this);
-        })
-    }
 }
 
 // function called to create HTML for bar_info_window
@@ -115,7 +85,7 @@ function bar_info_window(place) {
     current_place = place;
     var content =
         '<div class="place_title">' + place.name + '</div>' +
-        '<div class="place_address">' + place.vicinity + '</div>' +
+        '<div class="place_address">' + place.location.address + '</div>' +
         '<div class="place_review">Rating: ' + place.rating + '</div>' +
         '<div class="place_button_div"><button class="place_add_button">Add</button></div>';
     return content;
@@ -147,8 +117,82 @@ function create_route(origin, destination) {
 
 
 
+function pull_data_from_yelp(near) {
+    var auth = {
+        consumerKey : "azhNPdiWoW26hRe13Pk_nw",
+        consumerSecret : "Ms0KV6fWvMKC67c6dd0vx1Tyxdk",
+        accessToken : "k9M1RIB8lN5IkCImbjr_5zZruIhKJVat",
+        accessTokenSecret : "gaj-OJVo9JIRN3uozMtn20fq32w",
+        serviceProvider : {
+            signatureMethod : "HMAC-SHA1"
+        }
+    };
 
+    var accessor = {
+        consumerSecret : auth.consumerSecret,
+        tokenSecret : auth.accessTokenSecret
+    };
 
+    var parameters = [];
+    parameters.push(['term', 'bar']);
+    parameters.push(['location',near]);
+    parameters.push(['callback', 'cb']);
+    parameters.push(['oauth_consumer_key', auth.consumerKey]);
+    parameters.push(['oauth_consumer_secret', auth.consumerSecret]);
+    parameters.push(['oauth_token', auth.accessToken]);
+    parameters.push(['oauth_signature_method', 'HMAC-SHA1']);
+
+    var message = {
+        'action' : 'https://api.yelp.com/v2/search',
+        'method' : 'GET',
+        'parameters' : parameters
+    };
+
+    OAuth.setTimestampAndNonce(message);
+    OAuth.SignatureMethod.sign(message, accessor);
+
+    var parameterMap = OAuth.getParameterMap(message.parameters);
+
+    $.ajax({
+        'url' : message.action,
+        'data' : parameterMap,
+        'dataType' : 'jsonp',
+        'jsonpCallback' : 'cb',
+        'cache': true,
+        'success': function(results) {
+            console.log('yelp data pulled');
+            console.log(results);
+            bar_array = results;
+
+        }
+    })
+}
+
+function process_businesses(results) {
+    //results are stored into bar_array and plotted on map using createMarker function
+    initMap();
+    for (var i=0; i < results.businesses.length; i++) {
+        createMarker(results.businesses[i]);
+    }
+
+    function createMarker(place) {
+        var current_coordinates = { // stores lat and lng for current bar
+            lat: place.location.coordinate.latitude,
+            lng: place.location.coordinate.longitude
+        };
+        var marker = new google.maps.Marker({ // markers created and placed onto map using placeLoc
+            map: map,
+            position: current_coordinates,
+            icon: 'http://maps.google.com/mapfiles/kml/pal2/icon19.png'
+        });
+
+        google.maps.event.addListener(marker, 'click', function() { // click handlers added to each marker to display info_window
+            info_window.setContent(bar_info_window(place));
+            info_window.open(map, this);
+        })
+    }
+
+}
 
 
 
