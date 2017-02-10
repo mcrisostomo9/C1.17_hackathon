@@ -20,12 +20,11 @@ google.maps.event.addDomListener(window, 'load', initMap); //loads map after win
 $(document).ready(function() {
     event_handlers();
     $('.bar-main-container').on('click', '.btn-success', function(){
-
-
+        console.log(this);
         current_place = bar_array.businesses[this.id];
         add_bar_to_array();
+        update_add_to_list_button(this);
 
-        console.log("Add To List button works");
         var delete_button = $('<button>', {
             text: 'Delete Bar',
             class: 'btn btn-danger navbar-btn delete-btn'
@@ -82,7 +81,7 @@ function get_coordinates() {
             coordinates = result[0].geometry.location;
             latitude = coordinates.lat();
             longitude = coordinates.lng();
-            zoom = 11;
+            zoom = 12;
             pull_data_from_yelp($('.search_bar').val());
             setTimeout(function() {
                 process_businesses(bar_array);
@@ -110,6 +109,9 @@ function add_bar_to_array() {
 
     //  if statement used to plot route between last two items in route_path array
     if (bars_added.length > 1) {
+        if (bars_added.length > 2) {
+            directions_renderer.setMap(null);
+        }
         create_route(bars_added)
     }
 }
@@ -148,33 +150,46 @@ function create_route(bars_added) {
     console.log('create route called');
     var directions_service = new google.maps.DirectionsService();
     directions_renderer = new google.maps.DirectionsRenderer({
-        preserveViewport : true, // disables zoom in when creating route
+        //preserveViewport : true, // disables zoom in when creating route
         map: map,
         suppressMarkers: true // removes markers that are created on top of current markers when plotting route.
     });
 
-    for (var i = 0; i < bars_added.length-1; i++) {
 
-        var start_lat = bars_added[i].location.coordinate.latitude;
-        var start_lng = bars_added[i].location.coordinate.longitude;
-        var start_coordinates = new google.maps.LatLng(start_lat, start_lng);
+    var start_lat = bars_added[0].location.coordinate.latitude;
+    var start_lng = bars_added[0].location.coordinate.longitude;
+    var start_coordinates = new google.maps.LatLng(start_lat, start_lng);
 
-        var end_lat = bars_added[i+1].location.coordinate.latitude;
-        var end_lng = bars_added[i+1].location.coordinate.longitude;
-        var end_coordinates = new google.maps.LatLng(end_lat, end_lng);
+    var end_lat = bars_added[bars_added.length-1].location.coordinate.latitude;
+    var end_lng = bars_added[bars_added.length-1].location.coordinate.longitude;
+    var end_coordinates = new google.maps.LatLng(end_lat, end_lng);
 
-        var request = {
-            origin: start_coordinates,
-            destination: end_coordinates,
-            travelMode: 'DRIVING'
-        };
-
-        directions_service.route(request, function (response, status) {
-            if (status == 'OK') {
-                directions_renderer.setDirections(response);
-            }
-        })
+    if (bars_added.length > 2) {
+        for (var i=1; i < bars_added.length-1; i++) {
+            var waypoint_lat = bars_added[i].location.coordinate.latitude;
+            var waypoint_lng = bars_added[i].location.coordinate.longitude;
+            var waypoint_latlng = new google.maps.LatLng(waypoint_lat, waypoint_lng);
+            var waypoint_coordinates = [];
+            waypoint_coordinates.push({
+                location: waypoint_latlng
+            });
+        }
     }
+
+
+    var request = {
+        origin: start_coordinates,
+        destination: end_coordinates,
+        waypoints: waypoint_coordinates,
+        travelMode: 'DRIVING'
+    };
+
+    directions_service.route(request, function (response, status) {
+        if (status == 'OK') {
+            directions_renderer.setDirections(response);
+        }
+    })
+
 }
 
 
@@ -280,6 +295,9 @@ function bars_to_dom(addBarObj, index) {
 
     }
     var phone = $('<h5>').text('Phone: ' + addBarObj.phone);
+
+    // var price = $('<img>').attr('src',addBarObj.rating_img_url);//TODO need span with in hv?
+    // var rating = $('<h5>').text('Rating: ' + addBarObj.rating + ' Reviews: ' + addBarObj.review_count);//TODO need span with in hv?
     // var beerIconCount = null;
     // for (var i = 0; i < addBarObj.rating; i++){
     //     beerIconCount++;
@@ -287,6 +305,7 @@ function bars_to_dom(addBarObj, index) {
     // var totalBeerIcons =
     var rating = $('<h5>').text('Rating: ' + addBarObj.rating);
     var reviews = $('<h5>').text(addBarObj.review_count + ' Reviews');
+
 
     var add_button = $('<button>', {
         text: 'Add To List',
@@ -354,8 +373,10 @@ $('#lnkPrint').append(printList);
 function clear_list() {
     console.log('clear list called');
     bars_added = [];
-    initMap();
+    //initMap();
+    directions_renderer.setMap(null);
     $('.modal-body').empty();
+    $('.btn-default').removeClass('btn-default').addClass('btn-success').text('Add To List');
 
 }
 
@@ -376,7 +397,8 @@ function update_modal(current_place) {
 
     }
     var phone = $('<h5>').text('Phone: ' + current_place.phone);
-    var price = $('<h5>').text('Price Level: ' + current_place.price_level);//TODO need span with in hv?
+    debugger;
+    var price = $('<img>').attr('src',current_place.rating_img_url);//TODO need span with in hv?
     var rating = $('<h5>').text('Rating: ' + current_place.rating + ' Reviews: ' + current_place.review_count);//TODO need span with in hv?
 
     bar_info_list.append(address, phone, price, rating);
@@ -388,10 +410,21 @@ function update_modal(current_place) {
 }
 
 
+function update_add_to_list_button(button_element) {
+    $(button_element).removeClass('btn-success');
+    $(button_element).addClass('btn-default');
+    $(button_element).text('Selected');
+}
+
 //TODO update radius level to work with radio buttons
 //TODO remove sample data from check bar list
 
-//TODO remove radius radio buttons
+//TODO fix print screen
+//JSDOC commenting
+//TODO price level undefined
+
+//TODO change add to list to say selected
+
 
 
 
