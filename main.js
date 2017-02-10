@@ -14,6 +14,7 @@ var input;
 var directions_renderer;
 
 
+
 google.maps.event.addDomListener(window, 'load', initMap); //loads map after window has been loaded
 
 $(document).ready(function() {
@@ -74,6 +75,8 @@ function get_coordinates() {
                 process_businesses(bar_array);
                 update_bars()
             }, 1500)
+
+
         }
         else {
             console.log('geocoding not working')
@@ -88,7 +91,7 @@ function add_bar_to_array() {
         return;
     }
     bars_added.push(current_place);
-
+    update_modal(current_place);
     //  if statement used to plot route between last two items in route_path array
     if (bars_added.length > 1) {
         create_route(bars_added)
@@ -264,6 +267,8 @@ function bars_to_dom(addBarObj, index) {
         id: index
     });
 
+
+
     bar_info_list.append(address, phone, price, rating);
     bar_info_container.append(bar_name, bar_info_list, add_button);
     bar_image_container.append(bar_image);
@@ -320,19 +325,43 @@ $('#lnkPrint').append(printList);
 function clear_list() {
     console.log('clear list called');
     bars_added = [];
-    directions_renderer.setMap(null);
+    initMap();
+    $('.modal-body').empty();
 
 }
 
 
+function update_modal(current_place) {
+    var bar_container = $('<div>').addClass('barListItem media');
+    var bar_image_container = $('<div>').addClass('media-left media-middle');
+    var bar_image = $('<img>').attr('src', current_place.image_url).addClass('media-object');
+
+    var bar_info_container = $('<div>').addClass('media-body');
+    var bar_name = $('<h4>').text(current_place.name).addClass('media-heading');
+
+    var bar_info_list = $('<div>').addClass('col-md-8 pull-left');
+    var address = $('<h5>').text('Address: ' + current_place.location.display_address[0] + ', ' + current_place.location
+            .display_address[1]);//TODO need span with in hv?
+    // var hours = $('<h5>').text('Hours: ' +);//TODO need span with in hv?
+    if (current_place.price_level === undefined){
+
+    }
+    var phone = $('<h5>').text('Phone: ' + current_place.phone);
+    var price = $('<h5>').text('Price Level: ' + current_place.price_level);//TODO need span with in hv?
+    var rating = $('<h5>').text('Rating: ' + current_place.rating + ' Reviews: ' + current_place.review_count);//TODO need span with in hv?
+
+    bar_info_list.append(address, phone, price, rating);
+    bar_info_container.append(bar_name, bar_info_list);
+    bar_image_container.append(bar_image);
+
+    bar_container.append(bar_image_container, bar_info_container);
+    bar_container.appendTo('.modal-body');
+}
 
 
 //TODO update radius level to work with radio buttons
 //TODO remove sample data from check bar list
-//TODO add enter key to submitting location - DONE
-//TODO remove info_window after clicking add - DONE
-//TODO autocompelete - DONE
-//TODO create clear list button and clear map - DONE
+
 
 
 
