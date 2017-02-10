@@ -20,7 +20,15 @@ $(document).ready(function() {
     event_handlers();
     $('.bar-main-container').on('click', '.btn-success', function(){
         console.log("Add To List button works");
+        var delete_button = $('<button>', {
+            text: 'Delete Bar',
+            class: 'btn btn-danger navbar-btn delete-btn'
+        });
+
+        // To replace cloned 'Add To List' button to delete button
         $(this).parent().parent().clone().appendTo('.modal-body');
+        $('.modal-body').find('button').replaceWith(delete_button);
+        $('.delete-btn').click(remove_a_bar);
     });
 
 
@@ -288,7 +296,10 @@ function update_bars() {
  */
 
 function remove_a_bar() {
-    console.log('remoce_a_bar has been loaded')
+    console.log('delete bar has been clicked');
+    var selection = $(event.target).parent().parent();
+    selection.remove();
+
 }
 
 // //////////////////////////////////////This code is for the FB share button.
