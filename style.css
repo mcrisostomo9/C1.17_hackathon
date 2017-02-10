@@ -23,13 +23,11 @@ html, body {
     height: 50vh;
     overflow: auto;
 }
-h1{
+h1, h3{
     color: white;
     font-family: 'Fontdiner Swanky', cursive;
 }
-h1{
-    color: white;
-}
+
 
 .modal-body{
     background-image: url('http://25.media.tumblr.com/ab0c3e6e890208090c5d5095a02edc54/tumblr_mwhtyqsthw1qb0ablo1_500.jpg');
