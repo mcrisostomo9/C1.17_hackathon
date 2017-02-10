@@ -1,7 +1,6 @@
 var map; // map object
 var info_window; // info displayed when marker is clicked
 var bar_array = []; // results are stored from search
-//var input = $('#location_input'); //
 var radius = 8047; // initial radius
 var zoom  = 4; // initial zoom
 var latitude = 39; // initial latitude displayed when page loads
@@ -12,6 +11,14 @@ var geocoder = new google.maps.Geocoder(); //  creates geocoder object, used to 
 var coordinates; // stores location information for address that was input into search bar
 var bars_listed = [];
 var bars_added = [];
+var default_bounds = new google.maps.LatLngBounds(
+    new google.maps.LatLng(-126,20),
+    new google.maps.LatLng(-60,52)
+);
+var options = {
+    bounds: default_bounds
+};
+
 
 
 google.maps.event.addDomListener(window, 'load', initMap); //loads map after window has been loaded
@@ -21,6 +28,7 @@ $(document).ready(function() {
     $('.bar-main-container').on('click', '.btn-success', function(){
         console.log("Add To List button works");
         $(this).parent().parent().clone().appendTo('.modal-body');
+        console.log($(this));
     });
 
 
@@ -28,6 +36,11 @@ $(document).ready(function() {
     {
         window.print();
     });
+
+
+    var input = document.getElementById('location_search');
+    var autocomplete = new google.maps.places.Autocomplete(input, options);
+
 
 });
 
@@ -87,7 +100,10 @@ function initMap() {
     });
 
     info_window = new google.maps.InfoWindow(); // info_window displays popup company info when clicking on marker. specific info is defined below
+
+
 }
+
 
 // function called to create HTML for bar_info_window
 function bar_info_window(place) {
@@ -291,23 +307,23 @@ function remove_a_bar() {
     console.log('remoce_a_bar has been loaded')
 }
 
-//////////////////////////////////////This code is for the FB share button.
-window.fbAsyncInit = function() {
-    FB.init({
-        appId      : 'your-app-id',
-        xfbml      : true,
-        version    : 'v2.8'
-    });
-    FB.AppEvents.logPageView();
-};
-
-(function(d, s, id){
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) {return;}
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_US/sdk.js";
-    fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));
+// //////////////////////////////////////This code is for the FB share button.
+// window.fbAsyncInit = function() {
+//     FB.init({
+//         appId      : 'your-app-id',
+//         xfbml      : true,
+//         version    : 'v2.8'
+//     });
+//     FB.AppEvents.logPageView();
+// };
+//
+// (function(d, s, id){
+//     var js, fjs = d.getElementsByTagName(s)[0];
+//     if (d.getElementById(id)) {return;}
+//     js = d.createElement(s); js.id = id;
+//     js.src = "//connect.facebook.net/en_US/sdk.js";
+//     fjs.parentNode.insertBefore(js, fjs);
+// }(document, 'script', 'facebook-jssdk'));
 
 /////////////////////////////////////////////////
 
