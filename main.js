@@ -66,6 +66,17 @@ function event_handlers() {
 
 }
 
+function check_yelp_data() {
+    if ( bar_array.length < 2 )
+    {
+        window.setTimeout("check_yelp_data();",100);
+    }
+    else {
+        process_businesses(bar_array);
+        update_bars();
+    }
+}
+
 
 // takes info input into search field and returns lat/lng. info is then sent to initialize the map.
 function get_coordinates() {
@@ -73,18 +84,17 @@ function get_coordinates() {
     var address = {
         address: input_address
     };
-
+    bar_array = [''];
     geocoder.geocode(address, function(result, status){
         if (status === 'OK') {
             coordinates = result[0].geometry.location;
             latitude = coordinates.lat();
             longitude = coordinates.lng();
             zoom = 12;
+
+
             pull_data_from_yelp($('.search_bar').val());
-            setTimeout(function() {
-                process_businesses(bar_array);
-                update_bars()
-            }, 1500)
+            check_yelp_data();
 
 
         }
@@ -352,7 +362,7 @@ function remove_a_bar() {
 
 /////////////////////////////////////////////////
 
-var printList = $("#barList").printElement();
+var printList = $("#barList");
 
 $('#lnkPrint').append(printList);
 
@@ -396,7 +406,7 @@ function update_modal(current_place) {
 function update_add_to_list_button(button_element) {
     $(button_element).removeClass('btn-success');
     $(button_element).addClass('btn-default');
-    $(button_element).text('Selected');
+    $(button_element).text('Added');
 }
 
 //TODO update radius level to work with radio buttons
