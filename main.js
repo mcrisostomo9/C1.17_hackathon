@@ -20,12 +20,11 @@ google.maps.event.addDomListener(window, 'load', initMap); //loads map after win
 $(document).ready(function() {
     event_handlers();
     $('.bar-main-container').on('click', '.btn-success', function(){
-
-
+        console.log(this);
         current_place = bar_array.businesses[this.id];
         add_bar_to_array();
+        update_add_to_list_button(this);
 
-        console.log("Add To List button works");
         var delete_button = $('<button>', {
             text: 'Delete Bar',
             class: 'btn btn-danger navbar-btn delete-btn'
@@ -82,7 +81,7 @@ function get_coordinates() {
             coordinates = result[0].geometry.location;
             latitude = coordinates.lat();
             longitude = coordinates.lng();
-            zoom = 11;
+            zoom = 12;
             pull_data_from_yelp($('.search_bar').val());
             setTimeout(function() {
                 process_businesses(bar_array);
@@ -378,10 +377,21 @@ function update_modal(current_place) {
 }
 
 
+function update_add_to_list_button(button_element) {
+    $(button_element).removeClass('btn-success');
+    $(button_element).addClass('btn-default');
+    $(button_element).text('Selected');
+}
+
 //TODO update radius level to work with radio buttons
 //TODO remove sample data from check bar list
 
-//TODO remove radius radio buttons
+//TODO fix print screen
+//JSDOC commenting
+//TODO price level undefined
+
+//TODO change add to list to say selected
+
 
 
 
