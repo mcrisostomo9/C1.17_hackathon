@@ -24,15 +24,8 @@ $(document).ready(function() {
         add_bar_to_array();
         update_add_to_list_button(this);
 
-        var delete_button = $('<button>', {
-            text: 'Delete Bar',
-            class: 'btn btn-danger navbar-btn delete-btn'
-        });
 
-        // To replace cloned 'Add To List' button to delete button
-        // $(this).parent().parent().clone().appendTo('.modal-body');
-        // $('.modal-body').find('button').replaceWith(delete_button);
-        // $('.delete-btn').click(remove_a_bar);
+        $('.delete-btn').click(remove_a_bar);
 
     });
 
@@ -53,7 +46,8 @@ $(document).ready(function() {
 function event_handlers() {
     $('#map_canvas').on('click', '.place_add_button', function() {
         info_window.close();
-        add_bar_to_array()
+        add_bar_to_array();
+        $('.delete-btn').click(remove_a_bar);
     });
 
     // click handler for add button on info_window
@@ -327,11 +321,17 @@ function update_bars() {
 /**
  * function will remove any bars that have been added to the users to-do list once the (RED) button is clicked
  */
-
 function remove_a_bar() {
-    console.log('delete bar has been clicked');
+    console.log('bar has been deleted');
     var selection = $(event.target).parent().parent();
+    var delete_button = $(this).attr('id');
+    for(i = 0; i < bars_added.length; i++){
+        if(bars_added[i].name == delete_button){
+            bars_added.splice(i, 1);
+        }
+    }
     selection.remove();
+    create_route(bars_added);
 
 }
 
@@ -388,8 +388,15 @@ function update_modal(current_place) {
     var rating = $('<h5>').text('Rating: ' + current_place.rating);
     var reviews = $('<h5>').text(current_place.review_count + ' Reviews');
 
+
+    var delete_button = $('<button>', {
+        text: 'Delete Bar',
+        class: 'btn btn-danger navbar-btn delete-btn',
+        id: current_place.name
+    });
+
     bar_info_list.append(address, phone, hours, rating, reviews);
-    bar_info_container.append(bar_name, bar_info_list);
+    bar_info_container.append(bar_name, bar_info_list, delete_button);
     bar_image_container.append(bar_image);
     bar_container.append(bar_image_container, bar_info_container);
     bar_container.appendTo('.modal-body');
