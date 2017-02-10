@@ -12,40 +12,40 @@
     <script type="text/javascript" src="SHA1.js"></script>
     <script src="main.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Fontdiner+Swanky" rel="stylesheet">
-    <title>Beer Run</title>
+    <title>Designated Drinkers</title>
 </head>
 <body>
-<div class="container">
+<div class="container no_print">
     <!-- Will be reusing header created from Mark's Page 1 -->
     <div class="page-header">
         <h1 class="hidden-xs text-center no_print">Designated Drinkers</h1>
         <h3 class="visible-xs text-center no_print">Designated Drinkers</h3>
-        <div class="text-center">
-            <input type="text" id='location_search' class="search_bar" placeholder="Enter Zip Code/City">
-            <button class="search_button btn btn-primary">Get Barzzz</button>
-            <button type="button" class="btn btn-info no_print" data-toggle="modal" data-target="#barList">Check Bar List</button>
+        <div class="row">
+            <div class="form-group col-md-4 col-md-offset-3 col-xs-4 col-xs-offset-2">
+                
+                <input type="text" id='location_search' class="form-control search_bar" placeholder="Enter Zip Code/City">
+            </div>
+            <div class="col-md-offset-1 col-xs-offset-1">
+                <button class="search_button btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
+                <button type="button" class="btn btn-info no_print" data-toggle="modal" data-target="#barList">Check Bar List</button>
+            </div>
         </div>
     </div>
+
     <!-- Div used for Google Maps AJAX Call -->
-    <div id="map_container" class="col-md-7">
+    <div id="map_container" class="col-md-12">
         <div id="map_canvas">
 
-        </div>
-        <div class="btn-group pull-right">
-            <label class="radio-inline"><input type="radio" name="optradio">5 Miles</label>
-            <label class="radio-inline"><input type="radio" name="optradio">10 Miles</label>
-            <label class="radio-inline"><input type="radio" name="optradio">20 Miles</label>
         </div>
     </div>
 
     <!-- Div used for Beer Run Logo-->
-    <div class="col-md-5 pull-right bar-main-container">
-        <!-- Div used for Logo/Calculate Route -->
-        <div src="#"></div>
-        <!-- Div used for List Items-->
-    </div>
+    <!--<div class="col-md-5 pull-right bar-main-container no_print">-->
+        <!--&lt;!&ndash; Div used for Logo/Calculate Route &ndash;&gt;-->
+        <!--<div src="#"></div>-->
+        <!--&lt;!&ndash; Div used for List Items&ndash;&gt;-->
+    <!--</div>-->
 </div>
-
 
 <!-- Location to hold all Modals-->
 <div id="barList" class="modal fade" role="dialog">
@@ -55,7 +55,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Bar Joints</h4>
+                <h4 class="modal-title">Bar Crawl Itinerary</h4>
             </div>
 
             <!-- Beginning of Sample!-->
@@ -63,31 +63,41 @@
             <!-- Will be generated upon "Check Bar List" mouseclick event -->
 
             <div class="modal-body">
+                <!-- Sample Data -->
+                <!--<div class="media">-->
+                    <!--<div class="media-left media-middle">-->
+                        <!--<a href="#">-->
+                            <!--<img class=media-object" src="#" alt="">-->
+                        <!--</a>-->
+                    <!--</div>-->
+                    <!--<div class="media-body">-->
+                        <!--<h4 class="media-heading">Bar Name</h4>-->
+                        <!--<div class="col-md-9">-->
+                            <!--<h5>Address: <span class="">1234 Irvine Center Dr., Irvine, CA, 91234</span></h5>-->
+                            <!--<h5>Hours: <span class="">10pm - 3am</span></h5>-->
+                            <!--<h5>Phone: <span class="">323 213 6543</span></h5>-->
+                            <!--<h5>Reviews: <span class="">40 reviews</span></h5>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!-- End of sample entries -->
+
                 <div class="media">
                     <div class="media-left media-middle">
-                        <a href="#">
-                            <img class=media-object" src="#" alt="">
-                        </a>
+
                     </div>
                     <div class="media-body">
-                        <h4 class="media-heading">Bar Name</h4>
-                        <div class="col-md-9">
-                            <h5>Address: <span class="">1234 Irvine Center Dr., Irvine, CA, 91234</span></h5>
-                            <h5>Hours: <span class="">10pm - 3am</span></h5>
-                            <h5>Phone: <span class="">323 213 6543</span></h5>
-                            <h5>Reviews: <span class="">40 reviews</span></h5>
-                        </div>
+
                     </div>
                 </div>
             </div>
-            <!-- End of sample entries -->
             <div class="modal-footer">
-                <a href="#" id="lnkPrint" class="no_print">Print</a>
-                <button type="button" id= 'clear_list' class="btn btn-success no_print" data-dismiss="modal">Clear List</button>
-                <button type="button" class="btn btn-default no_print" data-dismiss="modal">Close</button>
+                <!-- <a href="#" id="lnkPrint" class="no_print">Print</a> -->
+                <button type="button" id="lnkPrint" class="no_print btn btn-success" data-dismiss="modal">Print List</button>
+                <button type="button" id= 'clear_list' class="btn btn-danger no_print" data-dismiss="modal">Clear List</button>
+                <button type="button" class="btn btn-info no_print" data-dismiss="modal">Close</button>
             </div>
         </div>
-
     </div>
 </div>
 </body>

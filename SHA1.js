@@ -7,7 +7,7 @@
  * See http://pajhome.org.uk/crypt/md5 for details.
  */
 
-/*
+/**
  * Configurable variables. You may need to tweak these to be compatible with
  * the server-side, but the defaults work in most cases.
  */
@@ -15,7 +15,7 @@ var hexcase = 0;  /* hex output format. 0 - lowercase; 1 - uppercase        */
 var b64pad  = ""; /* base-64 pad character. "=" for strict RFC compliance   */
 var chrsz   = 8;  /* bits per input character. 8 - ASCII; 16 - Unicode      */
 
-/*
+/**
  * These are the functions you'll usually want to call
  * They take string arguments and return either hex or base-64 encoded strings
  */
@@ -26,7 +26,7 @@ function hex_hmac_sha1(key, data){ return binb2hex(core_hmac_sha1(key, data));}
 function b64_hmac_sha1(key, data){ return binb2b64(core_hmac_sha1(key, data));}
 function str_hmac_sha1(key, data){ return binb2str(core_hmac_sha1(key, data));}
 
-/*
+/**
  * Perform a simple self-test to see if the VM is working
  */
 function sha1_vm_test()
@@ -34,7 +34,7 @@ function sha1_vm_test()
     return hex_sha1("abc") == "a9993e364706816aba3e25717850c26c9cd0d89d";
 }
 
-/*
+/**
  * Calculate the SHA-1 of an array of big-endian words, and a bit length
  */
 function core_sha1(x, len)
@@ -81,7 +81,7 @@ function core_sha1(x, len)
 
 }
 
-/*
+/**
  * Perform the appropriate triplet combination function for the current
  * iteration
  */
@@ -93,7 +93,7 @@ function sha1_ft(t, b, c, d)
     return b ^ c ^ d;
 }
 
-/*
+/**
  * Determine the appropriate additive constant for the current iteration
  */
 function sha1_kt(t)
@@ -102,7 +102,7 @@ function sha1_kt(t)
             (t < 60) ? -1894007588 : -899497514;
 }
 
-/*
+/**
  * Calculate the HMAC-SHA1 of a key and some data
  */
 function core_hmac_sha1(key, data)
@@ -121,7 +121,7 @@ function core_hmac_sha1(key, data)
     return core_sha1(opad.concat(hash), 512 + 160);
 }
 
-/*
+/**
  * Add integers, wrapping at 2^32. This uses 16-bit operations internally
  * to work around bugs in some JS interpreters.
  */
@@ -132,7 +132,7 @@ function safe_add(x, y)
     return (msw << 16) | (lsw & 0xFFFF);
 }
 
-/*
+/**
  * Bitwise rotate a 32-bit number to the left.
  */
 function rol(num, cnt)
@@ -140,7 +140,7 @@ function rol(num, cnt)
     return (num << cnt) | (num >>> (32 - cnt));
 }
 
-/*
+/**
  * Convert an 8-bit or 16-bit string to an array of big-endian words
  * In 8-bit function, characters >255 have their hi-byte silently ignored.
  */
@@ -153,7 +153,7 @@ function str2binb(str)
     return bin;
 }
 
-/*
+/**
  * Convert an array of big-endian words to a string
  */
 function binb2str(bin)
@@ -165,7 +165,7 @@ function binb2str(bin)
     return str;
 }
 
-/*
+/**
  * Convert an array of big-endian words to a hex string.
  */
 function binb2hex(binarray)
@@ -180,7 +180,7 @@ function binb2hex(binarray)
     return str;
 }
 
-/*
+/**
  * Convert an array of big-endian words to a base-64 string
  */
 function binb2b64(binarray)
