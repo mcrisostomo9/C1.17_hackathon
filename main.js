@@ -14,7 +14,6 @@ var input;
 var directions_renderer;
 
 
-
 google.maps.event.addDomListener(window, 'load', initMap); //loads map after window has been loaded
 
 $(document).ready(function() {
@@ -260,14 +259,11 @@ function process_businesses(results) {
 
 //create DOM elements for page 2
 function bars_to_dom(addBarObj, index) {
-
     var bar_container = $('<div>').addClass('barListItem media');
     var bar_image_container = $('<div>').addClass('media-left media-middle');
     var bar_image = $('<img>').attr('src', addBarObj.image_url).addClass('media-object');
-
     var bar_info_container = $('<div>').addClass('media-body');
     var bar_name = $('<h4>').text(addBarObj.name).addClass('media-heading');
-
     var bar_info_list = $('<div>').addClass('col-md-8 pull-left');
     var address = $('<h5>').text('Address: ' + addBarObj.location.display_address[0] + ', ' + addBarObj.location
             .display_address[1]);
@@ -275,9 +271,6 @@ function bars_to_dom(addBarObj, index) {
         var hours = $('<h5>').text('Hours: Open Now');
     } else {
         var hours = $('<h5>').text('Hours: CLOSED');
-    }
-    if (addBarObj.price_level === undefined){
-
     }
     var phone = $('<h5>').text('Phone: ' + addBarObj.phone);
     // var beerIconCount = null;
@@ -287,23 +280,18 @@ function bars_to_dom(addBarObj, index) {
     // var totalBeerIcons =
     var rating = $('<h5>').text('Rating: ' + addBarObj.rating);
     var reviews = $('<h5>').text(addBarObj.review_count + ' Reviews');
-
     var add_button = $('<button>', {
         text: 'Add To List',
-        class: 'btn btn-success navbar-btn',
+        class: 'btn btn-success navbar-btn pull-right',
         id: index
     });
 
     bar_info_list.append(address, phone, hours, rating, reviews);
-
     bar_info_container.append(bar_name, bar_info_list, add_button);
     bar_image_container.append(bar_image);
-
     bar_container.append(bar_image_container, bar_info_container);
     bar_container.appendTo('.bar-main-container');
-
 }
-
 
 /**
  * function will update bars that will be posted on page 2 when loaded, bar removed from list, or added to list.
@@ -364,25 +352,23 @@ function update_modal(current_place) {
     var bar_container = $('<div>').addClass('barListItem media');
     var bar_image_container = $('<div>').addClass('media-left media-middle');
     var bar_image = $('<img>').attr('src', current_place.image_url).addClass('media-object');
-
     var bar_info_container = $('<div>').addClass('media-body');
     var bar_name = $('<h4>').text(current_place.name).addClass('media-heading');
-
     var bar_info_list = $('<div>').addClass('col-md-8 pull-left');
     var address = $('<h5>').text('Address: ' + current_place.location.display_address[0] + ', ' + current_place.location
             .display_address[1]);//TODO need span with in hv?
-    // var hours = $('<h5>').text('Hours: ' +);//TODO need span with in hv?
-    if (current_place.price_level === undefined){
-
+    if (current_place.is_closed === false){
+        var hours = $('<h5>').text('Hours: Open Now');
+    } else {
+        var hours = $('<h5>').text('Hours: CLOSED');
     }
     var phone = $('<h5>').text('Phone: ' + current_place.phone);
-    var price = $('<h5>').text('Price Level: ' + current_place.price_level);//TODO need span with in hv?
-    var rating = $('<h5>').text('Rating: ' + current_place.rating + ' Reviews: ' + current_place.review_count);//TODO need span with in hv?
+    var rating = $('<h5>').text('Rating: ' + current_place.rating);
+    var reviews = $('<h5>').text(current_place.review_count + ' Reviews');
 
-    bar_info_list.append(address, phone, price, rating);
+    bar_info_list.append(address, phone, hours, rating, reviews);
     bar_info_container.append(bar_name, bar_info_list);
     bar_image_container.append(bar_image);
-
     bar_container.append(bar_image_container, bar_info_container);
     bar_container.appendTo('.modal-body');
 }
