@@ -30,16 +30,13 @@ $(document).ready(function() {
     });
 
 
-    $('#lnkPrint').click(function()
-    {
+    $('#lnkPrint').click(function() {
         window.print();
     });
 
-
     input = document.getElementById('location_search');
     var autocomplete = new google.maps.places.Autocomplete(input);
-
-
+    
 });
 
 
