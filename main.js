@@ -96,7 +96,7 @@ function bar_info_window(place) {
         '<div class="place_title">' + place.name + '</div>' +
         '<div class="place_address">' + place.location.address + '</div>' +
         '<div class="place_review">Rating: ' + place.rating + '</div>' +
-        '<div class="place_button_div"><button class="place_add_button">Add</button></div>';
+        '<div class="place_button_div"><button class="place_add_button btn btn-success">Add</button></div>';
     return content;
 }
 
