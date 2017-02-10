@@ -12,6 +12,7 @@ var bars_listed = [];
 var bars_added = [];
 var input;
 var directions_renderer;
+var timer = 0;
 
 
 google.maps.event.addDomListener(window, 'load', initMap); //loads map after window has been loaded
@@ -24,7 +25,8 @@ $(document).ready(function() {
         update_add_to_list_button(this);
 
 
-        $('.delete-btn').click(remove_a_bar);
+
+        // $('.delete-btn').click(remove_a_bar);
 
     });
 
@@ -43,13 +45,7 @@ $(document).ready(function() {
 
 
 function event_handlers() {
-    $('#map_canvas').on('click', '.place_add_button', function() {
-        info_window.close();
-        add_bar_to_array();
-        $('.delete-btn').click(remove_a_bar);
-    });
-
-    // click handler for add button on info_window
+    $('#map_canvas').on('click', '.place_add_button', marker_add_button);
     $('.search_button').click(get_coordinates);
     $('#clear_list').click(clear_list);
     $('#location_search').on('keypress', function(e) {
@@ -59,7 +55,16 @@ function event_handlers() {
     })
 
 }
-var timer = 0;
+
+function marker_add_button() {
+    info_window.close();
+    add_bar_to_array();
+    var current_id = this.id;
+    $('button[id="'+current_id+'"]').removeClass('btn-success').addClass('btn-default').text('Added');
+
+    //$('.delete-btn').click(remove_a_bar);
+}
+
 function check_yelp_data() {
     if ( bar_array.length < 2 )
     {
@@ -138,15 +143,15 @@ function initMap() {
 
 
 // function called to create HTML for bar_info_window
-function bar_info_window(place) {
+function bar_info_window(place, current_index) {
     current_place = place;
     var content =
         '<div class="place_title">' + place.name + '</div>' +
         '<div class="place_address">' + place.location.address + '</div>' +
         '<div class="place_phone">' + place.display_phone + '</div>' +
         '<div class="place_rating">Rating: ' + place.rating + '</div>' +
-        '<div class="place_review">' + place.reviews + ' Reviews</div>' +
-        '<div class="place_button_div"><button class="place_add_button btn btn-success">Add</button></div>';
+        '<div class="place_review">' + place.review_count + ' Reviews</div>' +
+        '<div class="place_button_div"><button id=' + current_index + ' class="place_add_button btn btn-success">Add</button></div>';
     return content;
 }
 
@@ -255,10 +260,10 @@ function process_businesses(results) {
     //results are stored into bar_array and plotted on map using createMarker function
     initMap();
     for (var i=0; i < results.businesses.length; i++) {
-        createMarker(results.businesses[i]);
+        createMarker(results.businesses[i], i);
     }
 
-    function createMarker(place) {
+    function createMarker(place, current_index) {
         var current_coordinates = { // stores lat and lng for current bar
             lat: place.location.coordinate.latitude,
             lng: place.location.coordinate.longitude
@@ -272,7 +277,7 @@ function process_businesses(results) {
         });
 
         google.maps.event.addListener(marker, 'click', function() { // click handlers added to each marker to display info_window
-            info_window.setContent(bar_info_window(place));
+            info_window.setContent(bar_info_window(place, current_index));
             info_window.open(map, this);
         })
     }
@@ -409,7 +414,7 @@ function update_modal(current_place) {
     });
 
     bar_info_list.append(address, phone, hours, rating, reviews);
-    bar_info_container.append(bar_name, bar_info_list, delete_button);
+    bar_info_container.append(bar_name, bar_info_list);
     bar_image_container.append(bar_image);
     bar_container.append(bar_image_container, bar_info_container);
     bar_container.appendTo('.modal-body');
@@ -422,14 +427,7 @@ function update_add_to_list_button(button_element) {
     $(button_element).text('Added');
 }
 
-//TODO update radius level to work with radio buttons
-//TODO remove sample data from check bar list
 
-//TODO fix print screen
-//JSDOC commenting
-//TODO price level undefined
-
-//TODO change add to list to say selected
 
 
 
