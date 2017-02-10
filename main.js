@@ -383,7 +383,8 @@ function update_modal(current_place) {
 
     }
     var phone = $('<h5>').text('Phone: ' + current_place.phone);
-    var price = $('<h5>').text('Price Level: ' + current_place.price_level);//TODO need span with in hv?
+    debugger;
+    var price = $('<img>').attr('src',current_place.rating_img_url);//TODO need span with in hv?
     var rating = $('<h5>').text('Rating: ' + current_place.rating + ' Reviews: ' + current_place.review_count);//TODO need span with in hv?
 
     bar_info_list.append(address, phone, price, rating);
