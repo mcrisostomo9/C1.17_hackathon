@@ -150,7 +150,8 @@ function bar_info_window(place) {
         '<div class="place_title">' + place.name + '</div>' +
         '<div class="place_address">' + place.location.address + '</div>' +
         '<div class="place_phone">' + place.display_phone + '</div>' +
-        '<div class="place_review">Rating: ' + place.rating + '</div>' +
+        '<div class="place_rating">Rating: ' + place.rating + '</div>' +
+        '<div class="place_review">' + place.reviews + ' Reviews</div>' +
         '<div class="place_button_div"><button class="place_add_button btn btn-success">Add</button></div>';
     return content;
 }
@@ -272,7 +273,8 @@ function process_businesses(results) {
             map: map,
             position: current_coordinates,
             icon: 'http://maps.google.com/mapfiles/kml/pal2/icon19.png'
-            // icon: {url: assets/beer_icon.png} TODO New icon for later
+            // icon: 'https://www.myfootballforum.com/uploads/monthly_2016_02/xbeer-icon.png.7b43d87e5544057447230087' +
+            // '630ea393.png.pagespeed.ic.8zZOESf-Wk.png'
         });
 
         google.maps.event.addListener(marker, 'click', function() { // click handlers added to each marker to display info_window
@@ -295,7 +297,7 @@ function bars_to_dom(addBarObj, index) {
     var bar_info_list = $('<div>').addClass('col-md-8 pull-left');
     var address = $('<h5>').text('Address: ' + addBarObj.location.display_address[0] + ', ' + addBarObj.location
             .display_address[1]);
-    if (addBarObj.is_closed === false){
+    if (addBarObj.is_closed === true){
         var hours = $('<h5>').text('Hours: Open Now');
     } else {
         var hours = $('<h5>').text('Hours: CLOSED');
@@ -390,7 +392,7 @@ function update_modal(current_place) {
     var bar_info_list = $('<div>').addClass('col-md-8 pull-left');
     var address = $('<h5>').text('Address: ' + current_place.location.display_address[0] + ', ' + current_place.location
             .display_address[1]);//TODO need span with in hv?
-    if (current_place.is_closed === false){
+    if (current_place.is_closed === true){
         var hours = $('<h5>').text('Hours: Open Now');
     } else {
         var hours = $('<h5>').text('Hours: CLOSED');

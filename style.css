@@ -45,7 +45,6 @@
         background-image: url('http://25.media.tumblr.com/ab0c3e6e890208090c5d5095a02edc54/tumblr_mwhtyqsthw1qb0ablo1_500.jpg');
         color: white;
         background-attachment: fixed;
-
     }
     .place_title, .place_address, .place_review, .place_button_div {
         font-weight: bold;
@@ -92,12 +91,13 @@
         padding: 1%;
     }
     .modal {
-        height: 75vh;
+        height: 90vh;
     }
     .modal-body {
         background-image: url('http://25.media.tumblr.com/ab0c3e6e890208090c5d5095a02edc54/tumblr_mwhtyqsthw1qb0ablo1_500.jpg');
         color: white;
         background-attachment: fixed;
+
     }
     .place_title, .place_address, .place_review, .place_button_div {
         font-weight: bold;
