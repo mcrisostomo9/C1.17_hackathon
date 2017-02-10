@@ -20,9 +20,22 @@ google.maps.event.addDomListener(window, 'load', initMap); //loads map after win
 $(document).ready(function() {
     event_handlers();
     $('.bar-main-container').on('click', '.btn-success', function(){
-        console.log("Add To List button works", this.id);
+
+
         current_place = bar_array.businesses[this.id];
         add_bar_to_array();
+
+        console.log("Add To List button works");
+        var delete_button = $('<button>', {
+            text: 'Delete Bar',
+            class: 'btn btn-danger navbar-btn delete-btn'
+        });
+
+        // To replace cloned 'Add To List' button to delete button
+        // $(this).parent().parent().clone().appendTo('.modal-body');
+        // $('.modal-body').find('button').replaceWith(delete_button);
+        // $('.delete-btn').click(remove_a_bar);
+
     });
 
 
@@ -91,7 +104,9 @@ function add_bar_to_array() {
         return;
     }
     bars_added.push(current_place);
+
     update_modal(current_place);
+
     //  if statement used to plot route between last two items in route_path array
     if (bars_added.length > 1) {
         create_route(bars_added)
@@ -119,6 +134,7 @@ function bar_info_window(place) {
     var content =
         '<div class="place_title">' + place.name + '</div>' +
         '<div class="place_address">' + place.location.address + '</div>' +
+        '<div class="place_phone">' + place.display_phone + '</div>' +
         '<div class="place_review">Rating: ' + place.rating + '</div>' +
         '<div class="place_button_div"><button class="place_add_button btn btn-success">Add</button></div>';
     return content;
@@ -295,7 +311,10 @@ function update_bars() {
  */
 
 function remove_a_bar() {
-    console.log('remoce_a_bar has been loaded')
+    console.log('delete bar has been clicked');
+    var selection = $(event.target).parent().parent();
+    selection.remove();
+
 }
 
 // //////////////////////////////////////This code is for the FB share button.
@@ -362,6 +381,7 @@ function update_modal(current_place) {
 //TODO update radius level to work with radio buttons
 //TODO remove sample data from check bar list
 
+//TODO remove radius radio buttons
 
 
 
