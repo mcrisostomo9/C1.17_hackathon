@@ -20,7 +20,12 @@ $(document).ready(function() {
     event_handlers();
     $('.bar-main-container').on('click', '.btn-success', function(){
         console.log("Add To List button works");
+        var delete_button = $('<button>', {
+            text: 'Delete',
+            class: 'btn btn-danger navbar-btn'
+        });
         $(this).parent().parent().clone().appendTo('.modal-body');
+        $('.modal-body').find('button').replaceWith(delete_button);
     });
 
 
