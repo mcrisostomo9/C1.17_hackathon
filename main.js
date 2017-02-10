@@ -48,7 +48,8 @@ $(document).ready(function() {
 function event_handlers() {
     $('#map_canvas').on('click', '.place_add_button', function() {
         info_window.close();
-        add_bar_to_array()
+        add_bar_to_array();
+        $('.delete-btn').click(remove_a_bar);
     });
 
     // click handler for add button on info_window
