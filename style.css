@@ -68,3 +68,8 @@ h1{
 .place_title, .place_address, .place_review, .place_button_div{
     font-weight: bold;
 }
+
+.radio-inline{
+    color: white;
+    text-shadow: 2px 2px black;
+}

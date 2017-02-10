@@ -1,3 +1,7 @@
+/*
+ * These are the local Variables we will be using for JS
+ *
+ */
 var map; // map object
 var info_window; // info displayed when marker is clicked
 var bar_array = []; // results are stored from search
@@ -13,9 +17,17 @@ var bars_added = [];
 var input;
 var directions_renderer;
 
+/*
+ *@loads map after window has been loaded
+ *
+ */
 
 google.maps.event.addDomListener(window, 'load', initMap); //loads map after window has been loaded
 
+/*
+ * This is our document ready. This will load up everything we need loaded before the HTML and CSS
+ *
+ */
 $(document).ready(function() {
     event_handlers();
     $('.bar-main-container').on('click', '.btn-success', function(){
@@ -44,7 +56,10 @@ $(document).ready(function() {
 
 });
 
-
+/**
+ * event-handler - This function will handle all the event handlers the website use.
+ *
+ */
 function event_handlers() {
     $('#map_canvas').on('click', '.place_add_button', function() {
         info_window.close();
@@ -63,7 +78,10 @@ function event_handlers() {
 }
 
 
-// takes info input into search field and returns lat/lng. info is then sent to initialize the map.
+/**
+ * get_coordinates - Takes info input into search field and returns lat/lng. info is then sent to initialize the map.
+ *
+*/
 function get_coordinates() {
     var input_address = $('.search_bar').val();
     var address = {
@@ -88,7 +106,10 @@ function get_coordinates() {
     });
 }
 
-// adds bar to bars_added array when "add" is clicked on info_window.
+/**
+ * add_bar_to_array - adds bar to bars_added array when "add" is clicked on info_window.
+ * function will populate array with bars withing chosen destination.
+ */
 function add_bar_to_array() {
     // if statement blocks ability to add same bar twice in a row
     if (current_place == bars_added[bars_added.length - 1]) {
@@ -105,8 +126,9 @@ function add_bar_to_array() {
         create_route(bars_added)
     }
 }
-
-// generates map using center, radius, lat, lng
+/**
+ * initMap - function generates map using center, radius, lat, lng.
+ */
 function initMap() {
     var center = {lat: latitude, lng: longitude};
     map = new google.maps.Map(document.getElementById('map_canvas'), {
@@ -120,8 +142,9 @@ function initMap() {
 
 }
 
-
-// function called to create HTML for bar_info_window
+/**
+* bar_info_window function called to create HTML for bar_info_window.
+ */
 function bar_info_window(place) {
     current_place = place;
     var content =
@@ -133,9 +156,11 @@ function bar_info_window(place) {
     return content;
 }
 
-
 // TODO add multiple travel modes = walking, driving, etc
-// function used to create route and render it on the map
+
+/**
+ * create_route - function used to create, route and render it on the map.
+ */
 function create_route(bars_added) {
     console.log('create route called');
     var directions_service = new google.maps.DirectionsService();
@@ -168,9 +193,6 @@ function create_route(bars_added) {
         })
     }
 }
-
-
-
 function pull_data_from_yelp(near) {
     var auth = {
         consumerKey : "azhNPdiWoW26hRe13Pk_nw",
@@ -246,10 +268,9 @@ function process_businesses(results) {
     }
 
 }
-
-
-
-//create DOM elements for page 2
+/**
+ * bars-to-dom - function used to create DOMS that will be created once search_button is called.
+ */
 function bars_to_dom(addBarObj) {
 
     var bar_container = $('<div>').addClass('barListItem media');
@@ -286,7 +307,7 @@ function bars_to_dom(addBarObj) {
 
 
 /**
- * function will update bars that will be posted on page 2 when loaded, bar removed from list, or added to list.
+ * function will update bars that will be posted on page 1 when loaded, bar removed from list, or added to list.
  */
 function update_bars() {
     console.log('update_bars has been loaded. ');
