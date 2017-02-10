@@ -65,15 +65,19 @@ function event_handlers() {
     })
 
 }
-
+var timer = 0;
 function check_yelp_data() {
     if ( bar_array.length < 2 )
     {
-        window.setTimeout("check_yelp_data();",100);
+
+        timer++;
+        console.log('waiting for yelp data: ' + timer + ' second(s)');
+        window.setTimeout("check_yelp_data();",1000);
     }
     else {
         process_businesses(bar_array);
         update_bars();
+        timer = 0;
     }
 }
 
