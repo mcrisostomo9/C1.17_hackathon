@@ -329,7 +329,7 @@ function process_businesses(results) {
         var marker = new google.maps.Marker({ // markers created and placed onto map using placeLoc
             map: map,
             position: current_coordinates,
-            icon: 'http://maps.google.com/mapfiles/kml/pal2/icon19.png'
+            icon: 'assets/icon19.png'
             // icon: 'https://www.myfootballforum.com/uploads/monthly_2016_02/xbeer-icon.png.7b43d87e5544057447230087' +
             // '630ea393.png.pagespeed.ic.8zZOESf-Wk.png'
         });
