@@ -31,15 +31,12 @@ $(document).ready(function() {
     });
 
 
-    $('#lnkPrint').click(function()
-    {
+    $('#lnkPrint').click(function() {
         window.print();
     });
 
-
     input = document.getElementById('location_search');
     var autocomplete = new google.maps.places.Autocomplete(input);
-
 
 });
 
@@ -152,6 +149,7 @@ function bar_info_window(place, current_index) {
         '<div class="place_rating">Rating: ' + place.rating + '</div>' +
         '<div class="place_review">' + place.review_count + ' Reviews</div>' +
         '<div class="place_button_div"><button id=' + current_index + ' class="place_add_button btn btn-success">Add</button></div>';
+
     return content;
 }
 
@@ -285,8 +283,11 @@ function process_businesses(results) {
 }
 
 
-
-//create DOM elements for page 2
+/** bars_to_dom()
+ * Creates DOM elements to be appended to div.bar-main-container to generate bar list items
+ * @param addBarObj
+ * @param index
+ */
 function bars_to_dom(addBarObj, index) {
     var bar_container = $('<div>').addClass('barListItem media');
     var bar_image_container = $('<div>').addClass('media-left media-middle');
@@ -303,8 +304,8 @@ function bars_to_dom(addBarObj, index) {
     }
     var phone = $('<h5>').text('Phone: ' + addBarObj.phone);
 
-    // var price = $('<img>').attr('src',addBarObj.rating_img_url);//TODO need span with in hv?
-    // var rating = $('<h5>').text('Rating: ' + addBarObj.rating + ' Reviews: ' + addBarObj.review_count);//TODO need span with in hv?
+    // var price = $('<img>').attr('src',addBarObj.rating_img_url);//
+    // var rating = $('<h5>').text('Rating: ' + addBarObj.rating + ' Reviews: ' + addBarObj.review_count);//
     // var beerIconCount = null;
     // for (var i = 0; i < addBarObj.rating; i++){
     //     beerIconCount++;
@@ -325,8 +326,8 @@ function bars_to_dom(addBarObj, index) {
     bar_container.appendTo('.bar-main-container');
 }
 
-/**
- * function will update bars that will be posted on page 2 when loaded, bar removed from list, or added to list.
+/** update_bars()
+ * function will update bars that will be loaded on AJAX call
  */
 function update_bars() {
     console.log('update_bars has been loaded. ');
@@ -336,7 +337,7 @@ function update_bars() {
     }
 }
 
-/**
+/** remove_a_bar()
  * function will remove any bars that have been added to the users to-do list once the (RED) button is clicked
  */
 function remove_a_bar() {
@@ -387,7 +388,10 @@ function clear_list() {
 
 }
 
-
+/** update_modal function
+ * Takes in current_place parameter to create DOM elements to be placed into Check Bar List Modal
+ * @param current_place
+ */
 function update_modal(current_place) {
     var bar_container = $('<div>').addClass('barListItem media');
     var bar_image_container = $('<div>').addClass('media-left media-middle');
@@ -396,7 +400,7 @@ function update_modal(current_place) {
     var bar_name = $('<h4>').text(current_place.name).addClass('media-heading');
     var bar_info_list = $('<div>').addClass('col-md-8 pull-left');
     var address = $('<h5>').text('Address: ' + current_place.location.display_address[0] + ', ' + current_place.location
-            .display_address[1]);//TODO need span with in hv?
+            .display_address[1]);
     if (current_place.is_closed === true){
         var hours = $('<h5>').text('Hours: Open Now');
     } else {
@@ -405,8 +409,6 @@ function update_modal(current_place) {
     var phone = $('<h5>').text('Phone: ' + current_place.phone);
     var rating = $('<h5>').text('Rating: ' + current_place.rating);
     var reviews = $('<h5>').text(current_place.review_count + ' Reviews');
-
-
     var delete_button = $('<button>', {
         text: 'Delete Bar',
         class: 'btn btn-danger navbar-btn delete-btn',
