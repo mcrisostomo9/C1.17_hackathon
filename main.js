@@ -108,6 +108,9 @@ function add_bar_to_array() {
 
     //  if statement used to plot route between last two items in route_path array
     if (bars_added.length > 1) {
+        if (bars_added.length > 2) {
+            directions_renderer.setMap(null);
+        }
         create_route(bars_added)
     }
 }
@@ -146,33 +149,46 @@ function create_route(bars_added) {
     console.log('create route called');
     var directions_service = new google.maps.DirectionsService();
     directions_renderer = new google.maps.DirectionsRenderer({
-        preserveViewport : true, // disables zoom in when creating route
+        //preserveViewport : true, // disables zoom in when creating route
         map: map,
         suppressMarkers: true // removes markers that are created on top of current markers when plotting route.
     });
 
-    for (var i = 0; i < bars_added.length-1; i++) {
 
-        var start_lat = bars_added[i].location.coordinate.latitude;
-        var start_lng = bars_added[i].location.coordinate.longitude;
-        var start_coordinates = new google.maps.LatLng(start_lat, start_lng);
+    var start_lat = bars_added[0].location.coordinate.latitude;
+    var start_lng = bars_added[0].location.coordinate.longitude;
+    var start_coordinates = new google.maps.LatLng(start_lat, start_lng);
 
-        var end_lat = bars_added[i+1].location.coordinate.latitude;
-        var end_lng = bars_added[i+1].location.coordinate.longitude;
-        var end_coordinates = new google.maps.LatLng(end_lat, end_lng);
+    var end_lat = bars_added[bars_added.length-1].location.coordinate.latitude;
+    var end_lng = bars_added[bars_added.length-1].location.coordinate.longitude;
+    var end_coordinates = new google.maps.LatLng(end_lat, end_lng);
 
-        var request = {
-            origin: start_coordinates,
-            destination: end_coordinates,
-            travelMode: 'DRIVING'
-        };
-
-        directions_service.route(request, function (response, status) {
-            if (status == 'OK') {
-                directions_renderer.setDirections(response);
-            }
-        })
+    if (bars_added.length > 2) {
+        for (var i=1; i < bars_added.length-1; i++) {
+            var waypoint_lat = bars_added[i].location.coordinate.latitude;
+            var waypoint_lng = bars_added[i].location.coordinate.longitude;
+            var waypoint_latlng = new google.maps.LatLng(waypoint_lat, waypoint_lng);
+            var waypoint_coordinates = [];
+            waypoint_coordinates.push({
+                location: waypoint_latlng
+            });
+        }
     }
+
+
+    var request = {
+        origin: start_coordinates,
+        destination: end_coordinates,
+        waypoints: waypoint_coordinates,
+        travelMode: 'DRIVING'
+    };
+
+    directions_service.route(request, function (response, status) {
+        if (status == 'OK') {
+            directions_renderer.setDirections(response);
+        }
+    })
+
 }
 
 
@@ -343,7 +359,8 @@ $('#lnkPrint').append(printList);
 function clear_list() {
     console.log('clear list called');
     bars_added = [];
-    initMap();
+    //initMap();
+    directions_renderer.setMap(null);
     $('.modal-body').empty();
     $('.btn-default').removeClass('btn-default').addClass('btn-success').text('Add To List');
 
