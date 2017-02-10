@@ -273,7 +273,7 @@ function bars_to_dom(addBarObj, index) {
 
     }
     var phone = $('<h5>').text('Phone: ' + addBarObj.phone);
-    var price = $('<h5>').text('Price Level: ' + addBarObj.price_level);//TODO need span with in hv?
+    var price = $('<img>').attr('src',addBarObj.rating_img_url);//TODO need span with in hv?
     var rating = $('<h5>').text('Rating: ' + addBarObj.rating + ' Reviews: ' + addBarObj.review_count);//TODO need span with in hv?
 
     var add_button = $('<button>', {
@@ -345,6 +345,7 @@ function clear_list() {
     bars_added = [];
     initMap();
     $('.modal-body').empty();
+    $('.btn-default').removeClass('btn-default').addClass('btn-success').text('Add To List');
 
 }
 
