@@ -116,7 +116,7 @@ function bar_info_window(place) {
         '<div class="place_title">' + place.name + '</div>' +
         '<div class="place_address">' + place.location.address + '</div>' +
         '<div class="place_review">Rating: ' + place.rating + '</div>' +
-        '<div class="place_button_div"><button class="place_add_button">Add</button></div>';
+        '<div class="place_button_div"><button class="place_add_button btn btn-success">Add</button></div>';
     return content;
 }
 
@@ -259,8 +259,7 @@ function bars_to_dom(addBarObj) {
 
     var add_button = $('<button>', {
         text: 'Add To List',
-        class: 'btn btn-success navbar-btn',
-        onclick: ''
+        class: 'btn btn-success navbar-btn'
     });
 
     bar_info_list.append(address, phone, price, rating);
@@ -272,24 +271,6 @@ function bars_to_dom(addBarObj) {
 
 }
 
-/**
- * function will loop through a list and will show up on the (left or right) of the screen with all nearby bars.
- */
-
-function show_bar_list() {
-    var bl = bars_listed[i];
-    var image  =  bl.image;
-    var bar_name = bl.name;
-    var hours = bl.hours;
-    var address = bl.address;
-    var phone_number = bl.phone;
-    var rating = bl.rating;
-    var pricing = bl.pricing;
-    for (i = 0; i < bars_listed.length; i++){
-
-    }
-
-}
 
 /**
  * function will update bars that will be posted on page 2 when loaded, bar removed from list, or added to list.
