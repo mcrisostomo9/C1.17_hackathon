@@ -6,19 +6,12 @@ var zoom  = 4; // initial zoom
 var latitude = 39; // initial latitude displayed when page loads
 var longitude = -97; // initial longitude displayed when page loads
 var current_place = {}; // used to store the place object you clicked on when viewing an info_window. current_place will be stored in our array if we click add
-var route_path = []; // stores lat/lng for each location that we have added to our list
 var geocoder = new google.maps.Geocoder(); //  creates geocoder object, used to convert locations to lat/lng
 var coordinates; // stores location information for address that was input into search bar
 var bars_listed = [];
 var bars_added = [];
-var default_bounds = new google.maps.LatLngBounds(
-    new google.maps.LatLng(-126,20),
-    new google.maps.LatLng(-60,52)
-);
-var options = {
-    bounds: default_bounds
-};
-
+var input;
+var directions_renderer;
 
 
 google.maps.event.addDomListener(window, 'load', initMap); //loads map after window has been loaded
@@ -28,7 +21,6 @@ $(document).ready(function() {
     $('.bar-main-container').on('click', '.btn-success', function(){
         console.log("Add To List button works");
         $(this).parent().parent().clone().appendTo('.modal-body');
-        console.log($(this));
     });
 
 
@@ -38,16 +30,28 @@ $(document).ready(function() {
     });
 
 
-    var input = document.getElementById('location_search');
-    var autocomplete = new google.maps.places.Autocomplete(input, options);
+    input = document.getElementById('location_search');
+    var autocomplete = new google.maps.places.Autocomplete(input);
 
 
 });
 
 
 function event_handlers() {
-    $('#map_canvas').on('click', '.place_add_button', add_bar_to_array); // click handler for add button on info_window
-    $('.search_button').click(get_coordinates)
+    $('#map_canvas').on('click', '.place_add_button', function() {
+        info_window.close();
+        add_bar_to_array()
+    });
+
+    // click handler for add button on info_window
+    $('.search_button').click(get_coordinates);
+    $('#clear_list').click(clear_list);
+    $('#location_search').on('keypress', function(e) {
+        if (e.which === 13) {
+            get_coordinates();
+        }
+    })
+
 }
 
 
@@ -122,7 +126,7 @@ function bar_info_window(place) {
 function create_route(bars_added) {
     console.log('create route called');
     var directions_service = new google.maps.DirectionsService();
-    var directions_renderer = new google.maps.DirectionsRenderer({
+    directions_renderer = new google.maps.DirectionsRenderer({
         preserveViewport : true, // disables zoom in when creating route
         map: map,
         suppressMarkers: true // removes markers that are created on top of current markers when plotting route.
@@ -198,7 +202,6 @@ function pull_data_from_yelp(near) {
         'cache': true,
         'success': function(results) {
             console.log('yelp data pulled');
-            console.log(results);
             bar_array = results;
 
         }
@@ -331,13 +334,23 @@ var printList = $("#barList").printElement();
 
 $('#lnkPrint').append(printList);
 
+function clear_list() {
+    console.log('clear list called');
+    bars_added = [];
+    directions_renderer.setMap(null);
+
+}
+
 
 
 
 //TODO update radius level to work with radio buttons
-//TODO add enter key to submitting location
-//TODO remove info_window after clicking add
 //TODO remove sample data from check bar list
+//TODO add enter key to submitting location - DONE
+//TODO remove info_window after clicking add - DONE
+//TODO autocompelete - DONE
+//TODO create clear list button and clear map - DONE
+
 
 
 
