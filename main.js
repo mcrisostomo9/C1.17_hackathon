@@ -1,3 +1,7 @@
+/**
+ * Define all local variables fo JS page.
+ *
+ */
 var map; // map object
 var info_window; // info displayed when marker is clicked
 var bar_array = []; // results are stored from search
@@ -14,9 +18,17 @@ var input;
 var directions_renderer;
 var timer = 0;
 
+/*
+ *@loads map after window has been loaded
+ *
+ */
 
 google.maps.event.addDomListener(window, 'load', initMap); //loads map after window has been loaded
 
+/**
+ *  Wait for documents to load and reset data to initial state.
+ *
+ */
 $(document).ready(function() {
     event_handlers();
 
@@ -28,8 +40,10 @@ $(document).ready(function() {
     var autocomplete = new google.maps.places.Autocomplete(input);
 
 });
-
-
+/**
+ * event-handler - This function will handle all the event handlers the website use.
+ *
+ */
 function event_handlers() {
     $('#map_canvas').on('click', '.place_add_button', marker_add_button);
     $('.search_button').click(get_coordinates);
@@ -84,7 +98,10 @@ function update_layout() {
     get_coordinates();
 }
 
-// takes info input into search field and returns lat/lng. info is then sent to initialize the map.
+/**
+ * get_coordinates - Takes info input into search field and returns lat/lng. info is then sent to initialize the map.
+ *
+*/
 function get_coordinates() {
     var input_address = $('.search_bar').val();
     var address = {
@@ -111,7 +128,10 @@ function get_coordinates() {
     });
 }
 
-// adds bar to bars_added array when "add" is clicked on info_window.
+/**
+ * add_bar_to_array - adds bar to bars_added array when "add" is clicked on info_window.
+ * function will populate array with bars withing chosen destination.
+ */
 function add_bar_to_array() {
     // if statement blocks ability to add same bar twice in a row
     if (current_place == bars_added[bars_added.length - 1]) {
@@ -129,8 +149,9 @@ function add_bar_to_array() {
         create_route(bars_added)
     }
 }
-
-// generates map using center, radius, lat, lng
+/**
+ * initMap - function generates map using center, radius, lat, lng.
+ */
 function initMap() {
     var center = {lat: latitude, lng: longitude};
     map = new google.maps.Map(document.getElementById('map_canvas'), {
@@ -143,9 +164,10 @@ function initMap() {
 
 
 }
-
-
-// function called to create HTML for bar_info_window
+/**
+* bar_info_window function called to create HTML for bar_info_window.
+ * @param place, current_index
+ */
 function bar_info_window(place, current_index) {
     current_place = place;
     var content =
@@ -159,9 +181,10 @@ function bar_info_window(place, current_index) {
     return content;
 }
 
+/**
+ * create_route - function used to create route and render it on the map.
+ */
 
-
-// function used to create route and render it on the map
 function create_route(bars_added) {
     console.log('create route called');
     var directions_service = new google.maps.DirectionsService();
@@ -207,9 +230,9 @@ function create_route(bars_added) {
     })
 
 }
-
-
-
+/**
+ * pull_data_from_yelp - ajax call that pulls required data from Yelp API
+ */
 function pull_data_from_yelp(near) {
     var auth = {
         consumerKey : "azhNPdiWoW26hRe13Pk_nw",
@@ -259,9 +282,14 @@ function pull_data_from_yelp(near) {
         }
     })
 }
-
+/**
+ *  process_businesses- results are stored into bar_array and plotted on map using createMarker function
+ *  @param (results)
+ *
+ *  createMarker - Stores latitude and longitude of current bar.
+ *  @param place, current_index
+ */
 function process_businesses(results) {
-    //results are stored into bar_array and plotted on map using createMarker function
     initMap();
     for (var i=0; i < results.businesses.length; i++) {
         createMarker(results.businesses[i], i);
@@ -287,8 +315,6 @@ function process_businesses(results) {
     }
 
 }
-
-
 /** bars_to_dom()
  * Creates DOM elements to be appended to div.bar-main-container to generate bar list items
  * @param addBarObj
@@ -331,7 +357,8 @@ function bars_to_dom(addBarObj, index) {
     bar_container.append(bar_image_container, bar_info_container);
     bar_container.appendTo('.bar-main-container');
 }
-
+/**
+ * function will update bars that will be posted on page 1 when loaded, bar removed from list, or added to list.
 /** update_bars()
  * function will update bars that will be loaded on AJAX call
  */
@@ -359,30 +386,13 @@ function remove_a_bar() {
     create_route(bars_added);
 
 }
-
-// //////////////////////////////////////This code is for the FB share button.
-// window.fbAsyncInit = function() {
-//     FB.init({
-//         appId      : 'your-app-id',
-//         xfbml      : true,
-//         version    : 'v2.8'
-//     });
-//     FB.AppEvents.logPageView();
-// };
-//
-// (function(d, s, id){
-//     var js, fjs = d.getElementsByTagName(s)[0];
-//     if (d.getElementById(id)) {return;}
-//     js = d.createElement(s); js.id = id;
-//     js.src = "//connect.facebook.net/en_US/sdk.js";
-//     fjs.parentNode.insertBefore(js, fjs);
-// }(document, 'script', 'facebook-jssdk'));
-
-/////////////////////////////////////////////////
-
 var printList = $("#barList");
 
 $('#lnkPrint').append(printList);
+
+/**
+ * clear_list - function clear_list clears bars_added when button is clicked.
+ */
 
 function clear_list() {
     console.log('clear list called');
@@ -428,7 +438,10 @@ function update_modal(current_place) {
     bar_container.appendTo('.modal-body');
 }
 
-
+/**
+ * update_add_to_list_button - function that will hold buttons used to update list.
+ * @param button_element
+ */
 function update_add_to_list_button(button_element) {
     $(button_element).removeClass('btn-success');
     $(button_element).addClass('btn-default');
