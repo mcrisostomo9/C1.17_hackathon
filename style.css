@@ -1,69 +1,174 @@
-#map_canvas {
-    height: 100%;
+/* Phones */
+/* Media query to adjust height and widths of map and Bar List */
+@media only screen and (min-width : 480px) {
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        background-image: url("assets/bigstock-Coffee-Shop-Blur-Background-Wi-86599157.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+    h1, h3 {
+        color: white;
+        font-family: 'Fontdiner Swanky', cursive;
+    }
+    .container {
+        height: 100%;
+    }
+    #map_container{
+        margin-top: 4%;
+        height: 30vh;
+    }
+    #map_canvas {
+        height: 100%;
+    }
+    .bar-main-container{
+        margin-top: 4%;
+        height: 50vh;
+        overflow: auto;
+        color: white;
+    }
+    .barListItem {
+        /*background-color: #6a5750;*/
+        background: rgba(0, 0, 0, 0.5);
+        padding: 1%;
+    }
+    .modal {
+        height: 75vh;
+    }
+    .modal-body {
+        background-image: url('http://25.media.tumblr.com/ab0c3e6e890208090c5d5095a02edc54/tumblr_mwhtyqsthw1qb0ablo1_500.jpg');
+        color: white;
+        background-attachment: fixed;
+
+    }
+    .place_title, .place_address, .place_review, .place_button_div {
+        font-weight: bold;
+    }
 }
+/* Desktops */
+/* Media query to adjust for Laptop/Desktop height and width for elements */
+@media only screen and (min-width : 992px) {
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        background-image: url("assets/bigstock-Coffee-Shop-Blur-Background-Wi-86599157.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+    h1, h3 {
+        color: white;
+        font-family: 'Fontdiner Swanky', cursive;
+    }
+    .container {
+        height: 100%;
+    }
+    #map_container {
+        margin-top: 1%;
+        height: 70vh;
+    }
+    #map_canvas {
+        height: 100%;
+    }
+    .bar-main-container {
+        margin-top: 1%;
+        height: 70vh;
+        overflow: auto;
+        color: white;
+    }
+    .barListItem {
+        /*background-color: #6a5750;*/
+        background: rgba(0, 0, 0, 0.5);
+        padding: 1%;
+    }
+    .modal {
+        height: 75vh;
+    }
+    .modal-body {
+        background-image: url('http://25.media.tumblr.com/ab0c3e6e890208090c5d5095a02edc54/tumblr_mwhtyqsthw1qb0ablo1_500.jpg');
+        color: white;
+        background-attachment: fixed;
+    }
+    .place_title, .place_address, .place_review, .place_button_div {
+        font-weight: bold;
+    }
+}
+
+
+/*#map_canvas {*/
+    /*height: 100%;*/
+/*}*/
+
 /* Optional: Makes the sample page fill the window. */
-html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    background-image: url("assets/bigstock-Coffee-Shop-Blur-Background-Wi-86599157.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-}
+/*html, body {*/
+    /*height: 100%;*/
+    /*margin: 0;*/
+    /*padding: 0;*/
+    /*background-image: url("assets/bigstock-Coffee-Shop-Blur-Background-Wi-86599157.jpg");*/
+    /*background-size: cover;*/
+    /*background-repeat: no-repeat;*/
+    /*background-attachment: fixed;*/
+/*}*/
 
-.container {
-    height: 100%;
-}
+/*.container {*/
+    /*height: 100%;*/
+/*}*/
 
-#map_container {
-    height: 50%;
-}
-.bar-main-container {
-    height: 50vh;
-    overflow: auto;
-}
-h1, h3{
-    color: white;
-    font-family: 'Fontdiner Swanky', cursive;
-}
+/*#map_container {*/
+    /*height: 50%;*/
+/*}*/
 
+/*.bar-main-container {*/
+    /*margin-top: 1%;*/
+    /*height: 50vh;*/
+    /*overflow: auto;*/
+    /*color: white;*/
+/*}*/
 
-.modal-body{
-    background-image: url('http://25.media.tumblr.com/ab0c3e6e890208090c5d5095a02edc54/tumblr_mwhtyqsthw1qb0ablo1_500.jpg');
-    color: white;
-    background-attachment: fixed;
+/*h1, h3 {*/
+    /*color: white;*/
+    /*font-family: 'Fontdiner Swanky', cursive;*/
+/*}*/
 
-}
+/*.modal-body {*/
+    /*background-image: url('http://25.media.tumblr.com/ab0c3e6e890208090c5d5095a02edc54/tumblr_mwhtyqsthw1qb0ablo1_500.jpg');*/
+    /*color: white;*/
+    /*background-attachment: fixed;*/
+
+/*}*/
 
 @media print {
-    .no_print{
+    .no_print {
         display: none;
     }
-    body{
+
+    body {
         size: 40px;
     }
-    #map_canvas{
+
+    #map_canvas {
         display: none;
     }
 
 }
 
-.bar-main-container{
-    color: white;
-}
-.barListItem {
-    /*background-color: #6a5750;*/
-    background: rgba(0,0,0, 0.5);
-    padding: 1%;
-}
+/*.barListItem {*/
+    /*!*background-color: #6a5750;*!*/
+    /*background: rgba(0, 0, 0, 0.5);*/
+    /*padding: 1%;*/
+/*}*/
 
-.modal{
-    height: 75vh;
-}
+/*.modal {*/
+    /*height: 75vh;*/
+/*}*/
+
+/*.place_title, .place_address, .place_review, .place_button_div {*/
+    /*font-weight: bold;*/
+/*}*/
 
 
-.place_title, .place_address, .place_review, .place_button_div{
-    font-weight: bold;
-}
 
