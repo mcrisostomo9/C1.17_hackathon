@@ -47,7 +47,7 @@ function event_handlers() {
     $('#clear_list').click(clear_list);
     $('#location_search').on('keypress', function(e) {
         if (e.which === 13) {
-            get_coordinates();
+            update_layout();
         }
     })
 
@@ -77,6 +77,15 @@ function check_yelp_data() {
     }
 }
 
+function update_layout() {
+    console.log('update layout called');
+    var bar_main_container = $('<div>').addClass('col-md-5 pull-right bar-main-container no_print');
+    $('#map_container').removeClass('col-md-12');
+    $('#map_container').addClass('col-md-7');
+    $('.container').append(bar_main_container);
+    update_layout = get_coordinates; // <----- Hey Dan, check it out #zeroPeriod
+    get_coordinates();
+}
 
 // takes info input into search field and returns lat/lng. info is then sent to initialize the map.
 function get_coordinates() {
