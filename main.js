@@ -1,4 +1,11 @@
 /**
+ * @file Main javascript file for webpage.
+ * @author Andy Ong, Mark Crisostomo, Jorge Cruz, Derrick Sebesta
+ */
+
+
+
+/**
  * Define all local variables fo JS page.
  *
  */
@@ -13,10 +20,10 @@ var current_place = {}; // used to store the place object you clicked on when vi
 var geocoder = new google.maps.Geocoder(); //  creates geocoder object, used to convert locations to lat/lng
 var coordinates; // stores location information for address that was input into search bar
 var bars_listed = [];
-var bars_added = [];
-var input;
-var directions_renderer;
-var timer = 0;
+var bars_added = []; // list of chosen bars
+var input; // location search bar
+var directions_renderer; // google maps route object
+var timer = 0; // timer used for yelp
 
 /*
  *@loads map after window has been loaded
@@ -56,6 +63,12 @@ function event_handlers() {
 
 }
 
+
+/**
+ * marker_add_button - Add button on info_window
+ *
+ */
+
 function marker_add_button() {
     info_window.close();
     add_bar_to_array();
@@ -65,10 +78,15 @@ function marker_add_button() {
     //$('.delete-btn').click(remove_a_bar);
 }
 
+
+/**
+ * check_yelp_data - Waits for yelp data before continuing
+ *
+ */
+
 function check_yelp_data() {
     if ( bar_array.length < 2 )
     {
-
         timer++;
         console.log('waiting for yelp data: ' + timer + ' second(s)');
         window.setTimeout("check_yelp_data();",1000);
@@ -79,6 +97,11 @@ function check_yelp_data() {
         timer = 0;
     }
 }
+
+/**
+ * update_layout - Updates initial layout from full width map to split page map and list. Reassigns function to get_coordinates
+ *
+ */
 
 function update_layout() {
     console.log('update layout called');
@@ -447,10 +470,3 @@ function update_add_to_list_button(button_element) {
     $(button_element).addClass('btn-default');
     $(button_element).text('Added');
 }
-
-
-
-
-
-
-
