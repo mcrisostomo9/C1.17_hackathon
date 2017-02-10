@@ -20,7 +20,6 @@ google.maps.event.addDomListener(window, 'load', initMap); //loads map after win
 $(document).ready(function() {
     event_handlers();
     $('.bar-main-container').on('click', '.btn-success', function(){
-        console.log(this);
         current_place = bar_array.businesses[this.id];
         add_bar_to_array();
         update_add_to_list_button(this);
@@ -144,7 +143,7 @@ function bar_info_window(place) {
 }
 
 
-// TODO add multiple travel modes = walking, driving, etc
+
 // function used to create route and render it on the map
 function create_route(bars_added) {
     console.log('create route called');
