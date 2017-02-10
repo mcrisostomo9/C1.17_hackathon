@@ -84,6 +84,7 @@ function get_coordinates() {
         }
         else {
             console.log('geocoding not working')
+
         }
     });
 }
@@ -237,6 +238,7 @@ function process_businesses(results) {
             map: map,
             position: current_coordinates,
             icon: 'http://maps.google.com/mapfiles/kml/pal2/icon19.png'
+            // icon: {url: assets/beer_icon.png} TODO New icon for later
         });
 
         google.maps.event.addListener(marker, 'click', function() { // click handlers added to each marker to display info_window
@@ -261,21 +263,30 @@ function bars_to_dom(addBarObj) {
 
     var bar_info_list = $('<div>').addClass('col-md-8 pull-left');
     var address = $('<h5>').text('Address: ' + addBarObj.location.display_address[0] + ', ' + addBarObj.location
-            .display_address[1]);//TODO need span with in hv?
-    // var hours = $('<h5>').text('Hours: ' +);//TODO need span with in hv?
+            .display_address[1]);
+    if (addBarObj.is_closed === false){
+        var hours = $('<h5>').text('Hours: Open Now');
+    } else {
+        var hours = $('<h5>').text('Hours: CLOSED');
+    }
     if (addBarObj.price_level === undefined){
 
     }
     var phone = $('<h5>').text('Phone: ' + addBarObj.phone);
-    var price = $('<h5>').text('Price Level: ' + addBarObj.price_level);//TODO need span with in hv?
-    var rating = $('<h5>').text('Rating: ' + addBarObj.rating + ' Reviews: ' + addBarObj.review_count);//TODO need span with in hv?
+    // var beerIconCount = null;
+    // for (var i = 0; i < addBarObj.rating; i++){
+    //     beerIconCount++;
+    // }
+    // var totalBeerIcons =
+    var rating = $('<h5>').text('Rating: ' + addBarObj.rating);
+    var reviews = $('<h5>').text(addBarObj.review_count + ' Reviews');
 
     var add_button = $('<button>', {
         text: 'Add To List',
         class: 'btn btn-success navbar-btn'
     });
 
-    bar_info_list.append(address, phone, price, rating);
+    bar_info_list.append(address, phone, hours, rating, reviews);
     bar_info_container.append(bar_name, bar_info_list, add_button);
     bar_image_container.append(bar_image);
 
