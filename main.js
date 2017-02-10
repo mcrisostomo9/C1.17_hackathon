@@ -315,7 +315,14 @@ function update_bars() {
 function remove_a_bar() {
     console.log('bar has been deleted');
     var selection = $(event.target).parent().parent();
+    var delete_button = $(this).attr('id');
+    for(i = 0; i < bars_added.length; i++){
+        if(bars_added[i].name == delete_button){
+            bars_added.splice(i, 1);
+        }
+    }
     selection.remove();
+    create_route(bars_added);
 
 }
 
@@ -373,7 +380,8 @@ function update_modal(current_place) {
 
     var delete_button = $('<button>', {
         text: 'Delete Bar',
-        class: 'btn btn-danger navbar-btn delete-btn'
+        class: 'btn btn-danger navbar-btn delete-btn',
+        id: current_place.name
     });
 
     bar_info_list.append(address, phone, price, rating);
