@@ -19,17 +19,6 @@ google.maps.event.addDomListener(window, 'load', initMap); //loads map after win
 
 $(document).ready(function() {
     event_handlers();
-    $('.bar-main-container').on('click', '.btn-success', function(){
-        current_place = bar_array.businesses[this.id];
-        add_bar_to_array();
-        update_add_to_list_button(this);
-
-
-
-        // $('.delete-btn').click(remove_a_bar);
-
-    });
-
 
     $('#lnkPrint').click(function() {
         window.print();
@@ -83,6 +72,14 @@ function update_layout() {
     $('#map_container').removeClass('col-md-12');
     $('#map_container').addClass('col-md-7');
     $('.container').append(bar_main_container);
+
+    $('.bar-main-container').on('click', '.btn-success', function(){
+        current_place = bar_array.businesses[this.id];
+        add_bar_to_array();
+        update_add_to_list_button(this);
+        // $('.delete-btn').click(remove_a_bar);
+    });
+
     update_layout = get_coordinates; // <----- Hey Dan, check it out #zeroPeriod
     get_coordinates();
 }
