@@ -25,7 +25,7 @@ var input; // location search bar
 var directions_renderer; // google maps route object
 var timer = 0; // timer used for yelp
 
-/*
+/**
  *@loads map after window has been loaded
  *
  */
