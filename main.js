@@ -46,7 +46,7 @@ $(document).ready(function() {
  */
 function event_handlers() {
     $('#map_canvas').on('click', '.place_add_button', marker_add_button);
-    $('.search_button').click(get_coordinates);
+    $('.search_button').click(update_layout);
     $('#clear_list').click(clear_list);
     $('#location_search').on('keypress', function(e) {
         if (e.which === 13) {
