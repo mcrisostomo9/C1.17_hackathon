@@ -19,8 +19,9 @@ google.maps.event.addDomListener(window, 'load', initMap); //loads map after win
 $(document).ready(function() {
     event_handlers();
     $('.bar-main-container').on('click', '.btn-success', function(){
-        console.log("Add To List button works");
-        $(this).parent().parent().clone().appendTo('.modal-body');
+        console.log("Add To List button works", this.id);
+        current_place = bar_array.businesses[this.id];
+        add_bar_to_array();
     });
 
 
@@ -237,7 +238,7 @@ function process_businesses(results) {
 
 
 //create DOM elements for page 2
-function bars_to_dom(addBarObj) {
+function bars_to_dom(addBarObj, index) {
 
     var bar_container = $('<div>').addClass('barListItem media');
     var bar_image_container = $('<div>').addClass('media-left media-middle');
@@ -259,7 +260,8 @@ function bars_to_dom(addBarObj) {
 
     var add_button = $('<button>', {
         text: 'Add To List',
-        class: 'btn btn-success navbar-btn'
+        class: 'btn btn-success navbar-btn',
+        id: index
     });
 
     bar_info_list.append(address, phone, price, rating);
@@ -279,7 +281,7 @@ function update_bars() {
     console.log('update_bars has been loaded. ');
     $('.bar-main-container').html('');
     for (var i =0; i < bar_array.businesses.length; i++){
-        bars_to_dom(bar_array.businesses[i]);
+        bars_to_dom(bar_array.businesses[i], i);
     }
 }
 
