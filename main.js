@@ -70,6 +70,10 @@ function add_bar_to_array() {
         return;
     }
     bars_added.push(current_place);
+    current_place.postion = bars_added.length-1;
+    for (var i = 0; i < bars_added.length; i++){
+        bars_to_dom(bars_added[i]);
+    }
 
     //  if statement used to plot route between last two items in route_path array
     if (bars_added.length > 1) {
@@ -95,6 +99,7 @@ function bar_info_window(place) {
     var content =
         '<div class="place_title">' + place.name + '</div>' +
         '<div class="place_address">' + place.location.address + '</div>' +
+        '<div class="place_phone">' + place.display_phone + '</div>' +
         '<div class="place_review">Rating: ' + place.rating + '</div>' +
         '<div class="place_button_div"><button class="place_add_button btn btn-success">Add</button></div>';
     return content;
